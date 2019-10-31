@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/dp_10"
+        android:background="@color/common_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/home_textview8"
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="未完成" />
+
+        <com.anju.yyk.common.widget.LabelsView
+            android:id="@+id/un_complete_lv"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:labelBackground="@drawable/grayline_label_bg"
+            app:labelTextColor="@color/common_text_default"
+            app:labelTextSize="@dimen/sp_14"
+            app:labelTextPaddingBottom="@dimen/dp_5"
+            app:labelTextPaddingLeft="@dimen/dp_10"
+            app:labelTextPaddingRight="@dimen/dp_10"
+            app:labelTextPaddingTop="@dimen/dp_5"
+            app:lineMargin="@dimen/dp_7"
+            app:wordMargin="@dimen/dp_8"
+            app:selectType="MULTI"
+            app:maxLines="0"
+            app:maxSelect="0"
+            app:minSelect="0"
+            app:isIndicator="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/dp_10"
+        android:background="@color/common_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/home_textview"
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="已完成" />
+
+        <com.anju.yyk.common.widget.LabelsView
+            android:id="@+id/complete_lv"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:labelBackground="@drawable/themeline_label_bg"
+            app:labelTextColor="@color/common_text_default"
+            app:labelTextSize="@dimen/sp_14"
+            app:labelTextPaddingBottom="@dimen/dp_5"
+            app:labelTextPaddingLeft="@dimen/dp_10"
+            app:labelTextPaddingRight="@dimen/dp_10"
+            app:labelTextPaddingTop="@dimen/dp_5"
+            app:lineMargin="@dimen/dp_7"
+            app:wordMargin="@dimen/dp_8"
+            app:selectType="MULTI"
+            app:maxLines="0"
+            app:maxSelect="0"
+            app:minSelect="0"
+            app:isIndicator="true"/>
+
+    </LinearLayout>
+</LinearLayout>

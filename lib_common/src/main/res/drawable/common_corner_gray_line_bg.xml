@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 灰色边框背景圆角 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+	<solid android:color="@color/common_white" />  //背景色
+	
+	<stroke
+		android:width="@dimen/dp_1"
+		android:color="@color/common_divder_color"  />  //边框颜色
+	
+	<padding
+		android:bottom="@dimen/dp_1"
+		android:left="@dimen/dp_1"
+		android:right="@dimen/dp_1"
+		android:top="@dimen/dp_1" />
+	
+	<corners android:radius="@dimen/dp_3"/>
+</shape>

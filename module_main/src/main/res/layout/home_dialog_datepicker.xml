@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_corner_white_bg">
+
+        <RelativeLayout
+            android:id="@+id/rl_tool"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/common_white">
+
+            <TextView
+                android:id="@+id/tv_month_day"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:textColor="#000000"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/tv_month_day"
+                android:orientation="vertical"
+                android:paddingBottom="12dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="12dp"
+                tools:ignore="RelativeOverlap">
+
+                <TextView
+                    android:id="@+id/tv_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_lunar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_current"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/home_bg_ripple">
+
+                <ImageView
+                    android:id="@+id/ib_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:tint="#000000"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/home_ic_calendar" />
+
+                <TextView
+                    android:id="@+id/tv_current_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_shape_calendar_dialog"
+            app:calendar_height="46dp"
+            app:current_month_lunar_text_color="#CFCFCF"
+            app:current_month_text_color="@color/common_text_default"
+            app:min_year="2018"
+            app:month_view="com.anju.yyk.main.widget.calendarview.CustomMonthView"
+            app:other_month_text_color="#e1e1e1"
+            app:scheme_text_color="@color/common_text_default"
+            app:scheme_theme_color="@color/common_theme"
+            app:selected_text_color="#fff"
+            app:selected_theme_color="@color/common_theme"
+            app:week_background="#fff"
+            app:week_text_color="@color/common_text_default"
+            app:week_view="com.anju.yyk.main.widget.calendarview.CustomWeekView"
+            app:year_view="com.anju.yyk.main.widget.calendarview.CustomYearView"
+            app:year_view_day_text_color="@color/common_text_default"
+            app:year_view_day_text_size="9sp"
+            app:year_view_month_text_color="@color/common_theme"
+            app:year_view_month_text_size="20sp"
+            app:year_view_scheme_color="@color/common_theme" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/common_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/common_space_10"
+            android:paddingBottom="@dimen/common_space_10"
+            android:paddingStart="@dimen/common_space_15"
+            android:paddingEnd="@dimen/common_space_15">
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                style="@style/common_text_small_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/common_confirm"
+                android:background="@drawable/common_corner_theme_color_bg"
+                android:paddingTop="@dimen/common_space_5"
+                android:paddingBottom="@dimen/common_space_5"
+                android:paddingStart="@dimen/common_space_15"
+                android:paddingEnd="@dimen/common_space_15"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                style="@style/common_text_small_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/common_cancel"
+                android:paddingTop="@dimen/common_space_5"
+                android:paddingBottom="@dimen/common_space_5"
+                android:paddingStart="@dimen/common_space_15"
+                android:paddingEnd="@dimen/common_space_15"
+                android:layout_marginEnd="@dimen/common_space_10"
+                android:background="@drawable/common_corner_theme_line_bg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tv_confirm"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

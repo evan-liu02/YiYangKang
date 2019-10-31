@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 灰色边框背景圆角 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 背景色 -->
+    <solid android:color="@color/common_white" />
+
+    <!-- 边框颜色 -->
+    <stroke
+        android:width="1dp"
+        android:color="@color/common_theme"  />
+
+    <padding
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp" />
+
+    <corners android:radius="9dp"/>
+</shape>

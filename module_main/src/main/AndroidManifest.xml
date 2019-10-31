@@ -1,0 +1,41 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.anju.yyk.main" >
+
+    <application android:theme="@style/common_AppTheme">
+
+        <activity android:name=".ui.act.login.LoginAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.homepage.HomePageAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.recorddetail.CareRecordDetailAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.web.WebAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.scantips.ScanTipsAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.addtip.AddTipAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.scantips.ScanPersonalTipsAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.personinfo.PersonInfoAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.infodetail.InfoDetailAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.recorddetail.CheckRoomDetailAct"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.act.recorddetail.AccidentDetailAct"
+            android:screenOrientation="portrait"/>
+
+    </application>
+
+</manifest>

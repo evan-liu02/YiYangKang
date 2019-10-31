@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.anju.yyk.common.widget.MyLayoutForGv xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/common_space_5">
+
+    <ImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_centerInParent="true"
+        app:srcCompat="@mipmap/home_ic_photo_place" />
+</com.anju.yyk.common.widget.MyLayoutForGv>

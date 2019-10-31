@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="@dimen/common_space_10"
+    android:paddingBottom="@dimen/common_space_10"
+    android:paddingStart="@dimen/common_space_15"
+    android:paddingEnd="@dimen/common_space_15">
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/home_ic_right_arrow"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:textColor="@color/common_theme"
+        android:textSize="@dimen/common_text_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_space_10"
+        tools:text="2019-09-09" />
+</LinearLayout>

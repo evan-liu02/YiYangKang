@@ -1,0 +1,90 @@
+<resources>
+
+    <string name="common_app_name">怡养康</string>
+
+    <string name="common_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890-</string>
+    <string name="common_indent">&#160;&#160;&#160;&#160;</string>
+
+    <string name="common_complete">完成</string>
+    <string name="common_confirm">确定</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_loading">加载中&#8230;&#8230;&#8230;</string>
+    <string name="common_local_ing">定位中&#8230;&#8230;&#8230;</string>
+    <string name="common_account">账号</string>
+    <string name="common_pwd">密码</string>
+    <string name="common_phone_num">手机号</string>
+    <string name="common_identifying_code">验证码</string>
+    <string name="common_login">登录</string>
+    <string name="common_delete">删除</string>
+    <string name="common_search">搜索</string>
+    <string name="common_login_success">登录成功</string>
+    <string name="common_logout">退出登录</string>
+    <string name="common_welcome_tip">欢迎怡养康</string>
+    <string name="common_input_limit_default">还可以写128个字</string>
+    <string name="common_input_limit_remarks">还可以写500个字</string>
+    <string name="common_today">今日</string>
+    <string name="common_copy_text">复制文本</string>
+
+    // 错误提示
+    <string name="common_toast_error_data">数据有误</string>
+    <string name="common_toast_net_unavailable">当前网络不可用</string>
+    <string name="common_toast_open_call_phone_op">请开启通话权限</string>
+    <string name="common_error_phone_number">电话号码有误</string>
+    <string name="common_error_location">定位失败</string>
+    <string name="common_toast_input_none">请输入内容</string>
+    <string name="common_upload_gps_success">上报位置成功</string>
+    <string name="common_upload_gps_failed">上报位置失败</string>
+    <string name="toast_sd_freesize_is_not_enough">SD卡空间不足</string>
+    <string name="toast_open_camera_op">请开启拍照权限</string>
+    <string name="toast_cancel_take_photo">取消拍照</string>
+    <string name="toast_sdcard_error">SD卡无效或没有插入!</string>
+    <string name="error_photo_imagecompress">压缩照片出错，请重新拍照</string>
+    <string name="error_photo_bitmap_isnull">压缩照片为空，请重新拍照</string>
+
+    <!-- 错误状态码解释 -->
+    <string name="common_error_status_code_default">网络错误</string>
+    <string name="common_error_status_code_401">401:需要通过HTTP认证，或认证失败</string>
+    <string name="common_error_status_code_403">403:请求资源被拒绝</string>
+    <string name="common_error_status_code_404">404:无法找到请求资源</string>
+    <string name="common_error_status_code_408">408:服务器等候请求时发生超时</string>
+    <string name="common_error_status_code_500">500:服务器遇到错误，无法完成请求</string>
+    <string name="common_error_status_code_502">502:错误网关</string>
+    <string name="common_error_status_code_503">503:服务不可用</string>
+    <string name="common_error_status_code_504">504:网关超时</string>
+    <string name="common_error_status_parse_error">解析错误</string>
+    <string name="common_error_status_connect_error">连接失败</string>
+    <string name="common_error_status_ssl_error">证书验证失败</string>
+    <string name="common_error_status_unknown_error">未知错误</string>
+
+    <string name="common_no_data">暂无数据，下拉试一下</string>
+    <string name="common_toast_no_more">无更多数据</string>
+
+    <!-- web相关 -->
+    <string name="common_topic_default_web">网页浏览</string>
+    <string name="common_error_web_url">网址链接错误</string>
+    <string name="common_error_web">web错误</string>
+
+    <string name="common_topic_setting">设&#160;&#160;置</string>
+    <string name="common_topic_help">帮&#160;&#160;助</string>
+    <string name="common_topic_update_record">更新记录</string>
+    <string name="common_topic_about_yyk">关于怡养康</string>
+    <string name="common_download_qr">下载二维码</string>
+    <string name="common_takecare_record">护理记录</string>
+    <string name="common_topic_detail_info">详细信息</string>
+
+    <string name="common_proganda">宣传</string>
+
+    <!-- String.format -->
+    <string name="common_copyright">怡养康 版权所有 V%1$s</string>
+    <string name="common_limit_text">还可以写%1$d个字</string>
+    <string name="common_separator_text">%1$s-%2$s</string>
+    <string name="common_month_day_text">%1$d月%2$d日</string>
+    <string name="common_ver_text">当前版本：V%1$s</string>
+    <string name="common_brackets_text">(%1$s)</string>
+    <string name="common_percentage_mark_text">%1$d&#037;</string>
+    <string name="common_record_time">%1$d分%2$d秒</string>
+
+    <item name="tag_key_data" type="id"/>
+    <item name="tag_key_position" type="id"/>
+
+</resources>

@@ -1,0 +1,60 @@
+<resources>
+
+    <string name="home_topic_appname">怡养康</string>
+    <string name="home_topic_sacan_tips">查看提醒</string>
+    <string name="home_topic_attention">注意事项</string>
+    <string name="home_tech_contract">技术咨询：山东安居科技 0533-3167611</string>
+    <string name="home_login_title">怡养康护理系统</string>
+    <string name="home_input_account">请输入账号</string>
+    <string name="home_input_pwd">请输入密码</string>
+    <string name="home_remeber_pwd">记住密码</string>
+    <string name="home_topic_person_info">老人信息</string>
+
+    <string name="home_toast_input_content">请输入内容</string>
+    <string name="home_fixed_top">置顶</string>
+    <string name="home_add_tip">添加提醒</string>
+    <string name="home_scan_tip">查看提醒</string>
+    <string name="home_room_type">全护II双人间</string>
+    
+    <string name="home_maingage">首页</string>
+    <string name="home_exchange">交班</string>
+    <string name="home_review">安全巡检</string>
+    <string name="home_record">记录查询</string>
+
+    <string name="home_date">日期</string>
+    <string name="home_choose_start_date">选择开始日期</string>
+    <string name="home_choose_end_date">选择结束日期</string>
+    <string name="home_old_man">老人</string>
+    <string name="home_search">搜索</string>
+    <string name="home_reset">重置</string>
+    <string name="home_scan_detail">查看详情</string>
+    <string name="home_care_record_title">护理记录：</string>
+    <string name="home_care_detail">护理详情</string>
+    <string name="home_checkroom_detail">查房详情</string>
+
+    <string name="home_dialog_title_exchange">交班确认</string>
+    <string name="home_dialog_content_exchange">是否完成本班次，确认交班</string>
+    <string name="home_dialog_cancle_exchange">取消交班</string>
+    <string name="home_dialog_confirm_exchange">确认交班</string>
+    
+    <string-array name="home_devices_title">
+        <item>电源线路情况</item>
+        <item>是否有遗留火种、可燃物</item>
+        <item>消防栓完好情况</item>
+        <item>灭火器完好情况</item>
+        <item>安全指示标识</item>
+        <item>安全出口</item>
+        <item>疏散通道是否畅通</item>
+        <item>监控设备完好情况</item>
+    </string-array>
+
+    <string-array name="home_chinese_week_string_array">
+        <item>周日</item>
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+    </string-array>
+</resources>

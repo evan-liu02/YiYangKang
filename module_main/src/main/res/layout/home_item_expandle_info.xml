@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/common_white"
+    android:paddingBottom="@dimen/common_space_20"
+    android:paddingEnd="@dimen/common_space_15">
+
+    <TextView
+        android:id="@+id/tv_fixedtop"
+        style="@style/common_text_small_white"
+        android:background="@color/common_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_fixed_top"
+        android:paddingTop="@dimen/common_space_5"
+        android:paddingBottom="@dimen/common_space_5"
+        android:paddingStart="@dimen/common_space_10"
+        android:paddingEnd="@dimen/common_space_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_sex"
+        android:layout_width="35dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/common_space_5"
+        android:layout_marginTop="@dimen/common_space_10"
+        app:srcCompat="@mipmap/home_ic_account"
+        app:layout_constraintLeft_toRightOf="@+id/tv_fixedtop"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_age"
+        style="@style/common_text_content_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_sex"
+        app:layout_constraintRight_toRightOf="@id/iv_sex"
+        app:layout_constraintTop_toBottomOf="@id/iv_sex"
+        tools:text="59岁" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/common_text_large_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_space_20"
+        app:layout_constraintTop_toTopOf="@+id/iv_sex"
+        app:layout_constraintBottom_toBottomOf="@id/iv_sex"
+        app:layout_constraintLeft_toRightOf="@id/iv_sex"
+        tools:text="毕曙光" />
+
+    <TextView
+        android:id="@+id/tv_bedid"
+        style="@style/common_text_content_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_age"
+        app:layout_constraintBottom_toBottomOf="@id/tv_age"
+        tools:text="2床" />
+
+    <TextView
+        android:id="@+id/tv_add_tip"
+        style="@style/common_text_content_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_add_tip"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_div"
+        style="@style/common_text_content_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:layout_marginStart="@dimen/common_space_5"
+        android:layout_marginEnd="@dimen/common_space_5"
+        app:layout_constraintRight_toLeftOf="@+id/tv_add_tip"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_scan_tip"
+        style="@style/common_text_content_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_scan_tip"
+        android:layout_marginEnd="@dimen/common_space_5"
+        app:layout_constraintRight_toLeftOf="@+id/tv_div"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_tag"
+        style="@style/common_text_tag_white"
+        android:background="@drawable/common_corner_theme_btn_bg"
+        android:paddingStart="@dimen/common_space_10"
+        android:paddingEnd="@dimen/common_space_10"
+        android:paddingTop="@dimen/common_space_3"
+        android:paddingBottom="@dimen/common_space_3"
+        android:layout_marginTop="@dimen/common_space_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_room_type"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_tip"
+        app:layout_constraintRight_toRightOf="@+id/tv_add_tip"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

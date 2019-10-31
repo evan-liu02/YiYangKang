@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/home_login_bg"
+        app:layout_constraintDimensionRatio="h, 16:11"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_topic"
+        android:textSize="36sp"
+        android:textColor="@color/common_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_login_title"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toTopOf="@+id/iv_head"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_head"
+        app:layout_constraintRight_toRightOf="@+id/iv_head"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_head"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/login_bg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/common_white"
+        android:layout_marginStart="@dimen/common_space_35"
+        android:layout_marginEnd="@dimen/common_space_35"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_topic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="@dimen/common_radius_10"
+        app:cardElevation="@dimen/common_radius_10">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingStart="@dimen/common_space_10"
+            android:paddingEnd="@dimen/common_space_10"
+            android:paddingTop="@dimen/common_space_30"
+            android:paddingBottom="@dimen/common_space_30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edt_account"
+                style="@style/common_text_content_default"
+                android:gravity="center_vertical"
+                android:textColorHint="@color/common_text_light_gray"
+                android:hint="@string/home_input_account"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height"
+                android:inputType="textPersonName"
+                android:layout_marginStart="@dimen/common_space_10"
+                android:layout_marginEnd="@dimen/common_space_10"
+                android:background="@drawable/common_corner_input_bg"
+                android:drawableStart="@mipmap/home_ic_account"
+                android:drawablePadding="@dimen/common_space_15"
+                android:paddingStart="@dimen/common_space_15"
+                android:paddingEnd="@dimen/common_space_15"
+                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="aaaac31" />
+
+            <EditText
+                android:id="@+id/edt_pwd"
+                style="@style/common_text_content_default"
+                android:gravity="center_vertical"
+                android:textColorHint="@color/common_text_light_gray"
+                android:hint="@string/home_input_pwd"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height"
+                android:inputType="textPassword"
+                android:layout_marginTop="@dimen/common_space_15"
+                android:background="@drawable/common_corner_input_bg"
+                android:drawableStart="@mipmap/home_ic_pwd"
+                android:drawablePadding="@dimen/common_space_15"
+                android:paddingStart="@dimen/common_space_15"
+                android:paddingEnd="@dimen/common_space_15"
+                app:layout_constraintLeft_toLeftOf="@id/edt_account"
+                app:layout_constraintRight_toRightOf="@id/edt_account"
+                app:layout_constraintTop_toBottomOf="@+id/edt_account"
+                tools:text="aaaac31" />
+
+            <CheckBox
+                android:id="@+id/cb_remeber"
+                style="@style/common_text_content_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_space_10"
+                app:layout_constraintTop_toBottomOf="@+id/edt_pwd"
+                app:layout_constraintRight_toRightOf="@+id/edt_pwd"
+                android:text="@string/home_remeber_pwd" />
+
+            <Button
+                android:id="@+id/btn_login"
+                style="@style/common_text_large_white"
+                android:background="@drawable/home_login_btn_bg"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height"
+                android:layout_marginTop="@dimen/common_space_15"
+                app:layout_constraintTop_toBottomOf="@+id/cb_remeber"
+                app:layout_constraintLeft_toLeftOf="@+id/edt_account"
+                app:layout_constraintRight_toRightOf="@id/edt_account"
+                android:text="@string/common_login" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/home_textview"
+        style="@style/common_text_tag_light_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_tech_contract"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_bg"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg_gray">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_white"
+        android:paddingTop="@dimen/common_space_10"
+        android:paddingBottom="@dimen/common_space_10"
+        android:paddingStart="@dimen/common_space_15"
+        android:paddingEnd="@dimen/common_space_15">
+
+        <ImageView
+            android:id="@+id/iv_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/home_ic_male"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_age"
+            style="@style/common_text_small_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_space_10"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_sex"
+            app:layout_constraintRight_toRightOf="@id/iv_sex"
+            app:layout_constraintTop_toBottomOf="@id/iv_sex"
+            tools:text="62岁" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/common_text_content_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_space_40"
+            app:layout_constraintTop_toTopOf="@+id/iv_sex"
+            app:layout_constraintBottom_toBottomOf="@id/iv_sex"
+            app:layout_constraintLeft_toRightOf="@id/iv_sex"
+            tools:text="隔壁老王" />
+
+        <TextView
+            android:id="@+id/tv_bed_number"
+            style="@style/common_text_content_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+            app:layout_constraintRight_toRightOf="@id/tv_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_age"
+            app:layout_constraintBottom_toBottomOf="@id/tv_age"
+            tools:text="39床" />
+
+        <TextView
+            android:id="@+id/tv_care_type"
+            android:textColor="@color/common_theme"
+            android:textSize="@dimen/common_text_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/tv_age"
+            app:layout_constraintBottom_toBottomOf="@id/tv_age"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="自理" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/common_white"
+        android:layout_marginTop="@dimen/common_space_10"
+        android:paddingStart="@dimen/common_space_15"
+        android:paddingTop="@dimen/common_space_20"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:textColor="@color/common_white"
+            android:textSize="@dimen/common_text_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/common_theme"
+            android:paddingTop="@dimen/common_space_10"
+            android:paddingBottom="@dimen/common_space_10"
+            android:paddingStart="@dimen/common_space_20"
+            android:paddingEnd="@dimen/common_space_20"
+            android:text="@string/home_care_record_title" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_divder_height"
+        android:background="@color/common_white"/>
+
+</LinearLayout>

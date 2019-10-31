@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@color/common_white"
+    android:padding="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/common_text_content_default"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="理发" />
+
+    <com.anju.yyk.common.widget.ToggleButton
+        android:id="@+id/switch_btn"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        toggle:onColor="@color/common_theme"
+        toggle:offColor="@color/common_white"
+        toggle:spotColor="@color/common_white"
+        toggle:borderWidth="@dimen/common_divder_height"
+        toggle:offBorderColor="@color/common_divder_color"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_25" />
+</LinearLayout>

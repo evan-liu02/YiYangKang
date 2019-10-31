@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="common_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
+    <style name="common_toolbar_style" parent="@style/Widget.AppCompat.Toolbar">
+        <!-- 解决Toolbar左边空白 -->
+        <item name="contentInsetStart">0dp</item>
+    </style>
+
+    <style name="NoTitleTranslucentTheme" parent="common_AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/common_transparent_half</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
+    <!-- toolbar文字按钮 -->
+    <style name="common_toolbar_text_style">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_text_default</item>
+    </style>
+
+    <!-- toolbar标题 -->
+    <style name="common_toolbar_topic_style">
+        <item name="android:textSize">@dimen/common_text_topic</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="common_text_content_default">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_text_default</item>
+    </style>
+
+    <style name="common_text_small_default">
+        <item name="android:textSize">@dimen/common_text_small</item>
+        <item name="android:textColor">@color/common_text_default</item>
+    </style>
+
+    <style name="common_text_tag_default">
+        <item name="android:textSize">@dimen/common_text_tag</item>
+        <item name="android:textColor">@color/common_text_default</item>
+    </style>
+
+    <style name="common_text_large_default">
+        <item name="android:textSize">@dimen/common_text_btn</item>
+        <item name="android:textColor">@color/common_text_default</item>
+    </style>
+
+
+    <style name="common_text_largest_default">
+        <item name="android:textSize">@dimen/common_text_largest</item>
+        <item name="android:textColor">@color/common_text_default</item>
+    </style>
+
+    <style name="common_text_content_light_gray">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_text_light_gray</item>
+    </style>
+
+    <style name="common_text_small_light_gray">
+        <item name="android:textSize">@dimen/common_text_small</item>
+        <item name="android:textColor">@color/common_text_light_gray</item>
+    </style>
+
+    <style name="common_text_tag_light_gray">
+        <item name="android:textSize">@dimen/common_text_tag</item>
+        <item name="android:textColor">@color/common_text_light_gray</item>
+    </style>
+    
+    <style name="common_text_small_hint">
+        <item name="android:textSize">@dimen/common_text_small</item>
+        <item name="android:textColor">@color/common_text_hint_color</item>
+    </style>
+
+    <style name="common_text_content_black">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="common_text_large_black">
+        <item name="android:textSize">@dimen/common_text_btn</item>
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="common_text_tag_white">
+        <item name="android:textSize">@dimen/common_text_tag</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="common_text_small_white">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="common_text_large_white">
+        <item name="android:textSize">@dimen/common_text_btn</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="common_text_largest_white">
+        <item name="android:textSize">@dimen/common_text_largest</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="common_text_tag_theme">
+        <item name="android:textSize">@dimen/common_text_tag</item>
+        <item name="android:textColor">@color/common_theme</item>
+    </style>
+
+    <style name="common_text_large_theme">
+        <item name="android:textSize">@dimen/common_text_btn</item>
+        <item name="android:textColor">@color/common_theme</item>
+    </style>
+
+    <style name="common_text_content_theme">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_theme</item>
+    </style>
+
+    <style name="common_text_small_theme">
+        <item name="android:textSize">@dimen/common_text_small</item>
+        <item name="android:textColor">@color/common_theme</item>
+    </style>
+
+    <style name="common_text_green_content">
+        <item name="android:textSize">@dimen/common_text_content</item>
+        <item name="android:textColor">@color/common_text_green</item>
+    </style>
+
+    <style name="common_text_green_large">
+        <item name="android:textSize">@dimen/common_text_btn</item>
+        <item name="android:textColor">@color/common_text_green</item>
+    </style>
+
+    <!-- sweet alert -->
+    <style name="common_alert_dialog" parent="android:Theme.Dialog">
+        common_dialog_blue_button
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@color/common_float_transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+
+    <style name="common_dialog_blue_button" parent="android:Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">31dp</item>
+        <item name="android:background">@drawable/common_blue_btn_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">21dp</item>
+        <item name="android:paddingRight">21dp</item>
+        <item name="android:textColor">@color/common_button_text_color</item>
+    </style>
+
+</resources>

@@ -1,0 +1,101 @@
+ext{
+
+    android = [
+            compileSdkVersion       : 29,
+            buildToolsVersion       : "29.0.0",
+            minSdkVersion           : 17,
+            targetSdkVersion        : 29,
+            versionCode             : 1,
+            versionName             : "1.6.4"
+    ]
+
+    version = [
+            espressoSdkVersion      : "3.3.0-alpha01",
+            butterknifeSdkVersion   : "10.1.0",
+            dagger2SdkVersion       : "2.23.2",
+            okhttp3Version          : "4.0.0-alpha02",
+            retrofitSdkVersion      : "2.6.0",
+            rxlifecycle2SdkVersion  : "3.0.0",
+            greendaoSdkVersion      : "3.2.2",
+            roomSdkVersion          : "1.1.1",
+            glideSdkVersion         : "4.9.0",
+            androidxSdkVersion      : "1.1.0-alpha05",
+            permissionsdispatcherSdkVersion   : "4.3.1"
+    ]
+
+    dependencies = [
+            // support
+            "appcompat"                : "androidx.appcompat:appcompat:1.1.0-rc01",
+            "recyclerview"             : "androidx.recyclerview:recyclerview:1.0.0",
+            "cardview"                 : "androidx.cardview:cardview:1.0.0",
+            "annotations"              : "androidx.annotation:annotation:1.1.0",
+            "vectordrawable"           : "androidx.vectordrawable:vectordrawable:1.1.0-rc01",
+            "multidex"                 : "com.android.support:multidex:1.0.3",
+            "design"                   : "com.google.android.material:material:1.1.0-alpha07",
+            "support-v4"               : "androidx.legacy:legacy-support-v4:1.0.0",
+            "constraint-layout"        : "androidx.constraintlayout:constraintlayout:2.0.0-beta2",
+
+            // Atrouter
+            "arouter-api"              : "com.alibaba:arouter-api:1.5.0",
+            "arouter-compiler"         : "com.alibaba:arouter-compiler:1.2.2",
+
+            // glide
+            "glide"                    : "com.github.bumptech.glide:glide:${version["glideSdkVersion"]}",
+            "glide-compiler"           : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
+
+            // net
+            "okhttp3"                  : "com.squareup.okhttp3:okhttp:${version["okhttp3Version"]}",
+            "okhttp3-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:${version["okhttp3Version"]}",
+            "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.7.5",
+            "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
+            "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
+            "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
+            "retrofit2-converter-scalars": "com.squareup.retrofit2:${version["retrofitSdkVersion"]}",
+            "retrofit-url-manager"     : "me.jessyan:retrofit-url-manager:1.4.0",
+
+            // rx2
+            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.2.8",
+            "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:2.1.1",
+            "rxlifecycle2"              : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
+            "rxlifecycle2-android"      : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
+            "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
+            "rxpermissions2"            : "com.github.tbruyelle:rxpermissions:0.10.2",
+            "rx-net-for-download"       : "com.github.JiangAndroidwork:RetrofitOfRxJava:4.2",
+
+            // view
+            "butterknife"              : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
+            "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
+            "base-recyclerview-adapter-helper"     : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46",
+            "singleclick"              : "com.github.jarryleo:SingleClick:v1.8.3",
+            "bottom-navigation-bar"    : "com.ashokvarma.android:bottom-navigation-bar:2.1.0",
+            "numberprogressbar"        : "com.daimajia.numberprogressbar:library:1.4@aar",
+            "ultra-ptr"                : "in.srain.cube:ultra-ptr:1.0.11",
+            "ptr_load_more"            : "in.srain.cube:ptr-load-more:1.0.6",
+            "calendarview"             : "com.haibin:calendarview:3.6.7",
+
+
+            // db
+            "room"                     : "android.arch.persistence.room:runtime:${version["roomSdkVersion"]}",
+            "room-compiler"            : "android.arch.persistence.room:compiler:${version["roomSdkVersion"]}",
+            "greendao-generator"       : "org.greenrobot:greendao-generator:${version["greendaoSdkVersion"]}",
+            "greendao"                 : "org.greenrobot:greendao:${version["greendaoSdkVersion"]}",
+
+            // tools
+            "eventbus"                 : "org.greenrobot:eventbus:3.1.1",
+            "klog"                     : "com.github.zhaokaiqiang.klog:library:1.6.0",
+            "gson"                     : "com.google.code.gson:gson:2.8.5",
+            "dagger2"                  : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
+            "dagger2-android"          : "com.google.dagger:dagger-android:${version["dagger2SdkVersion"]}",
+            "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${version["dagger2SdkVersion"]}",
+            "dagger2-compiler"         : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
+            "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
+            "permissions-dispatcher"   : "org.permissionsdispatcher:permissionsdispatcher:${version["permissionsdispatcherSdkVersion"]}",
+            "permissionsdispatcher-processor"   : "org.permissionsdispatcher:permissionsdispatcher-processor:${version["permissionsdispatcherSdkVersion"]}",
+
+            //test
+            "junit"                    : "junit:junit:4.13-beta-3",
+            "runner"                   : "androidx.test:runner:1.3.0-alpha01",
+            "espresso-core"            : "androidx.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
+            "espresso-contrib"         : "androidx.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}"
+    ]
+}
