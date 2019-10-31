@@ -206,13 +206,7 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
 
     @Override
     public void clickPlay(String audioUrl) {
-        if (mediaPlayer!= null){
-            if (mediaPlayer.isPlaying()){
-                mediaPlayer.stop();
-                mediaPlayer.release();
-            }
-        }
-        preareMediaPlayer(audioUrl);
+        prepareMediaPlayer(audioUrl);
         startPlay();
     }
 
@@ -245,9 +239,10 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
         }
     };
 
-    private void preareMediaPlayer(String audioUrl){
+    private void prepareMediaPlayer(String audioUrl){
+        releaseMediaPlayer();
         try {
-            mediaPlayer.reset();
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(audioUrl);
             mediaPlayer.prepare();
             initMediaPlayerListener();
@@ -293,9 +288,14 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        releaseMediaPlayer();
+    }
+
+    private void releaseMediaPlayer() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 
