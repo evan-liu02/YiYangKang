@@ -21,6 +21,7 @@ import com.anju.yyk.main.adapter.CheckRoomAdapter;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,6 +58,7 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
     AppSP mAppSP;
 
     private PersonListResponse.ListBean mPersonInfo;
+    private HashMap<String, String> itemMap = new HashMap<String, String>();
 
     @Override
     public int getLayoutId() {
@@ -115,6 +117,22 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
             mList.clear();
             mList.addAll(listBeans);
             mAdapter.notifyDataSetChanged();
+
+            if (mList != null && mList.size() > 0) {
+                for (CheckRoomListResponse.ListBean itemBean : mList) {
+                    int type = itemBean.getLeixing();
+                    if (type == 2) {
+                        itemMap.put(itemBean.getLieming(), itemBean.getToggleStatus() == 1 ? "否" : "是");
+                    } else if (type == 1) {
+                        List<CheckRoomListResponse.ListBean.OptionBean> option = itemBean.getOption();
+                        if (option != null && option.size() > 0) {
+                            itemMap.put(itemBean.getLieming(), option.get(0).getZhi());
+                        }
+                    } else if (type == 0) {
+                        itemMap.put(itemBean.getLieming(), "");
+                    }
+                }
+            }
         }
     }
 
@@ -127,22 +145,30 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
     public void toggle(int position, boolean isCheck, String id) {
         mCurPosition = position;
         KLog.d("点击了第" + position + "行------" + isCheck);
-        if (isCheck){
+        if (isCheck) {
             mList.get(mCurPosition).setToggleStatus(0);
-        }else {
+        } else {
             mList.get(mCurPosition).setToggleStatus(1);
+        }
+        if (position < mList.size()) {
+            String key = mList.get(position).getLieming();
+            itemMap.put(key, isCheck ? "是" : "否");
         }
     }
 
     @Override
     public void selectedItem(int position, String itemText) {
-
+        if (position < mList.size()) {
+            String key = mList.get(position).getLieming();
+            itemMap.put(key, itemText);
+        }
     }
 
     @OnClick({R2.id.btn_commit})
     public void onViewClicked(View view){
-        if (view.getId() == R.id.btn_commit){
-//        mPresenter.checkRoomCommit(mAppSP.getUserId(), id, isCheck, mPersonInfo.getId());
+        if (view.getId() == R.id.btn_commit) {
+            //11-01 12:37:07.140 10646 10646 E AndroidRuntime: java.lang.IllegalArgumentException: @FieldMap parameters can only be used with form encoding. (parameter #6)
+            mPresenter.checkRoomCommit(mAppSP.getUserId(), "", false, mPersonInfo.getId(), itemMap);
         }
     }
 }

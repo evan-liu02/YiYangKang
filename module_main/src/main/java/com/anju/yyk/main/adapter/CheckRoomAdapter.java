@@ -62,7 +62,7 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
                         public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
                             CheckRoomListResponse.ListBean.OptionBean item = (CheckRoomListResponse.ListBean.OptionBean) np.getSelectedItem();
                             if (mCallback != null)
-                                mCallback.selectedItem(position, item.getMingcheng() + "|" + item.getZhi());
+                                mCallback.selectedItem(position, item.getZhi());
                         }
                     });
                     np.attachDataSource(options);
