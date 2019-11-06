@@ -242,6 +242,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
     @Override
     public void addTips(PersonListResponse.ListBean bean) {
         ARouter.getInstance().build(RouterConstants.ACT_URL_ADD_TIP)
+                .withSerializable(RouterKey.BUNDLE_TAG, bean)
                 .navigation();
     }
 

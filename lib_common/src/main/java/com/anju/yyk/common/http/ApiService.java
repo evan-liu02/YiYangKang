@@ -17,6 +17,7 @@ import com.anju.yyk.common.entity.response.JisShuResponse;
 import com.anju.yyk.common.entity.response.LoginResponse;
 import com.anju.yyk.common.entity.response.OperationResponse;
 import com.anju.yyk.common.entity.response.PersonListResponse;
+import com.anju.yyk.common.entity.response.UploadAudioResponse;
 
 import java.util.Map;
 
@@ -340,6 +341,27 @@ public interface ApiService {
     @Multipart
     @POST(ApiAddr.PATH)
     Observable<BaseResponse> uploadAudio(@Part("description") RequestBody des, @Part MultipartBody.Part file);
+
+    /**
+     * 上传音频
+     * @param file
+     * @return
+     */
+    @Multipart
+    @POST(ApiAddr.UPLOAD_PATH)
+    Observable<UploadAudioResponse> uploadAudio(@Query("action") String action, @Query("name") String name, @Part MultipartBody.Part file);
+
+    /**
+     * 添加提醒
+     * @param action
+     * @param id
+     * @param userId
+     * @param content
+     * @param tipAudioPath
+     * @return
+     */
+    @POST(ApiAddr.PATH)
+    Observable<BaseResponse> addTip(@Query("action") String action, @Query("laoren_id") String id, @Query("hugong_id") String userId, @Query("content") String content, @Query("tipAudioPath") String tipAudioPath);
 
     /**
      * 上传图片

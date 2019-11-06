@@ -53,9 +53,10 @@ public class ApiAction {
     public static final String PATROL_ACTION = "anquan";
 
     /** 添加提醒*/
-    public static final String ADD_TIP_ACTION = "add_tip";
+    public static final String ADD_TIP_ACTION = "zhuyiadd";
     /** 上传照片*/
     public static final String ADD_PHOTO_ACTION = "add_photo";
     /** 已读*/
     public static final String READED_ACTION = "yidu";
+    public static final String SOUND_ACTION = "UpLoadFile";
 }

@@ -124,10 +124,14 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
     @Override
     public void checkRoomDetailSucc(CheckRoomDetailResponse response) {
         List<CheckRoomDetailResponse.ListBean> listBeans = response.getList();
+        // TODO 返回的数据不包含性别信息
+        mAgeTv.setText(response.getNianling() + "岁");
+        mNumberBed.setText(response.getChuangwei() + "床");
+        mCareTypeTv.setText(response.getHulijibie());
         if (listBeans != null && listBeans.size() > 0){
-            mAgeTv.setText(listBeans.get(0).getNianling() + "岁");
+            /*mAgeTv.setText(listBeans.get(0).getNianling() + "岁");
             mNumberBed.setText(listBeans.get(0).getChuangwei() + "床");
-            mCareTypeTv.setText(listBeans.get(0).getHulijibie());
+            mCareTypeTv.setText(listBeans.get(0).getHulijibie());*/
             mList.clear();
             mList.addAll(listBeans);
             mAdapter.notifyDataSetChanged();

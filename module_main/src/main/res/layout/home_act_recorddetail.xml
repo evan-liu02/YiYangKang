@@ -91,7 +91,7 @@
             android:paddingBottom="@dimen/common_space_10"
             android:paddingStart="@dimen/common_space_20"
             android:paddingEnd="@dimen/common_space_20"
-            android:text="@string/home_care_record_title" />
+            android:text="@string/home_checkroom_record_title" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

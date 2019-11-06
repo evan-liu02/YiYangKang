@@ -20,11 +20,16 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.anju.yyk.common.app.arouter.RouterConstants;
+import com.anju.yyk.common.app.arouter.RouterKey;
+import com.anju.yyk.common.app.sp.AppSP;
 import com.anju.yyk.common.base.BaseActivity;
 import com.anju.yyk.common.base.BaseMvpActivity;
 import com.anju.yyk.common.base.BaseResponse;
+import com.anju.yyk.common.entity.response.PersonListResponse;
 import com.anju.yyk.common.utils.klog.KLog;
 import com.anju.yyk.main.R;
 import com.anju.yyk.main.R2;
@@ -70,7 +75,7 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
     private static final String AUDIO_DIR_NAME = "yyk_audio";
 
     private File mAudioDir;
-    private String mFilePath;
+    private String mFilePath = "";
 
     private boolean isStart;
     private MediaRecorder mr = null;
@@ -80,6 +85,10 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
     private MyRunnable mRunnable;
     private Handler mHandler = new Handler();
 
+    @Autowired(name = RouterKey.BUNDLE_TAG)
+    public PersonListResponse.ListBean mPersonInfo;
+    private AppSP mAppSP;
+
     @Override
     protected int getLayoutId() {
         return R.layout.home_act_addtip;
@@ -87,6 +96,8 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
 
     @Override
     protected void init() {
+        ARouter.getInstance().inject(this);
+        mAppSP = new AppSP(mActivity);
         hideToolbar();
         requestPermissions();
 //        initVoice();
@@ -160,14 +171,16 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
         }else if (v.getId() == R.id.btn_cancel){
             finish();
         }else if (v.getId() == R.id.btn_commit){
-            if (!TextUtils.isEmpty(mFilePath)){
-                if (isStart) {
-                    stopRecord();
-                }
-                String content = mTipContentEdt.getText().toString().trim();
-                // TODO 上传成功，但是会报错
-                mPresenter.uploadAudio(content, mFilePath);
+            String content = mTipContentEdt.getText().toString().trim();
+            if (TextUtils.isEmpty(content)) {
+                showToast(R.string.home_add_tip_hint);
+                return;
             }
+            if (isStart) {
+                stopRecord();
+            }
+            // TODO 上传成功，但是会报错
+            mPresenter.addTip(mPersonInfo.getId(), mAppSP.getUserId(), content, mFilePath);
         }
     }
 

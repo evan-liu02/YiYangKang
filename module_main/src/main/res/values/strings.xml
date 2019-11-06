@@ -31,6 +31,7 @@
     <string name="home_care_record_title">护理记录：</string>
     <string name="home_care_detail">护理详情</string>
     <string name="home_checkroom_detail">查房详情</string>
+    <string name="home_checkroom_record_title">查房记录：</string>
 
     <string name="home_dialog_title_exchange">交班确认</string>
     <string name="home_dialog_content_exchange">是否完成本班次，确认交班</string>
@@ -60,4 +61,5 @@
 
     <string name="home_no_external_storage_tip">请先授予“怡养康”访问存储空间的权限</string>
     <string name="home_no_record_audio_tip">请先授予“怡养康”录制音频的权限</string>
+    <string name="home_add_tip_hint">请先输入提醒内容</string>
 </resources>

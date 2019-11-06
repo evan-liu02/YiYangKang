@@ -17,6 +17,9 @@ public class CheckRoomDetailResponse {
     private int status;
     private String title;
     private List<ListBean> list;
+    private String chuangwei = "";
+    private String hulijibie = "";
+    private String nianling = "";
 
     public int getStatus() {
         return status;
@@ -40,6 +43,30 @@ public class CheckRoomDetailResponse {
 
     public void setList(List<ListBean> list) {
         this.list = list;
+    }
+
+    public String getChuangwei() {
+        return chuangwei;
+    }
+
+    public void setChuangwei(String chuangwei) {
+        this.chuangwei = chuangwei;
+    }
+
+    public String getHulijibie() {
+        return hulijibie;
+    }
+
+    public void setHulijibie(String hulijibie) {
+        this.hulijibie = hulijibie;
+    }
+
+    public String getNianling() {
+        return nianling;
+    }
+
+    public void setNianling(String nianling) {
+        this.nianling = nianling;
     }
 
     public static class ListBean implements MultiItemEntity {

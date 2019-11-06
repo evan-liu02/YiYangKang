@@ -138,7 +138,6 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
 
     @Override
     public void checkRoomCommitSucc() {
-
     }
 
     @Override
