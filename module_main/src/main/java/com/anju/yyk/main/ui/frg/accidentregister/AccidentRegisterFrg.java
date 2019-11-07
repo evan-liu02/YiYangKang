@@ -1,11 +1,13 @@
 package com.anju.yyk.main.ui.frg.accidentregister;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -174,6 +177,10 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
      * 打开相机
      */
     private void openCamera(){
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
         if (!AppUtil.isCanTakePhoto()){
             showToast(R.string.toast_sd_freesize_is_not_enough);
             return;
@@ -199,9 +206,15 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             String fileName = System.currentTimeMillis() + ".jpg";
             file = new File(dir, fileName);
-            Uri u = Uri.fromFile(file);
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            } else {
+                uri = Uri.fromFile(file);
+            }
             intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             try {
                 startActivityForResult(intent, GET_IMAGE_VIA_CAMERA_BEFORE);
             } catch (Exception e) {
@@ -232,7 +245,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                     photo = BitmapFactory.decodeFile(file.getPath(), option);
                     if (photo != null){
                         try {
-                            smallBitmap = mImageCompress.comp(mImageCompress.getimage(file.getAbsoluteFile().getAbsolutePath()));
+                            smallBitmap = mImageCompress.comp(mImageCompress.getimage(file.getAbsolutePath()));
                         } catch (Exception e) {
                             e.printStackTrace();
                             showToast(R.string.error_photo_imagecompress);
@@ -250,7 +263,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                                 photos.add(photo);
                                 mAdapter.notifyDataSetChanged();
                                 // 此处上传图片
-                                mPresenter.uploadPhoto(mSmallPicFilePath);
+//                                mPresenter.uploadPhoto(mSmallPicFilePath);
                                 smallBitmap = null;
                             }else {
                                 showToast(R.string.error_photo_bitmap_isnull);

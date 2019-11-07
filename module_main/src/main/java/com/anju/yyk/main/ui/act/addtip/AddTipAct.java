@@ -224,6 +224,7 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
                 mr.start();  //开始录制
 //                startTimeCount();
                 mFilePath = soundFile.getAbsolutePath();
+                mChronometer.setBase(SystemClock.elapsedRealtime());
                 mChronometer.start();
                 mRecordBtn.setText("停止录音");
                 isStart = true;
