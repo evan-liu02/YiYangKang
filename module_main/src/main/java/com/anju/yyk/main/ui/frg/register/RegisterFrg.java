@@ -163,6 +163,14 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
         }
     }
 
+    @Override
+    public void textChanged(int position, String text) {
+        if (position < mList.size()) {
+            String key = mList.get(position).getLieming();
+            itemMap.put(key, text);
+        }
+    }
+
     @OnClick({R2.id.btn_commit})
     public void onViewClicked(View view){
         if (view.getId() == R.id.btn_commit) {

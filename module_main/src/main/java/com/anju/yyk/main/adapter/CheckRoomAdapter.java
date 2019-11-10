@@ -1,9 +1,12 @@
 package com.anju.yyk.main.adapter;
 
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 
 import com.anju.yyk.common.entity.response.CheckRoomListResponse;
@@ -43,6 +46,34 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
         switch (helper.getItemViewType()){
             case CHECKROOM_TXT_TYPE:
                 helper.setText(R.id.tv_title, item.getTitle());
+                int hintResId = R.string.home_checkroom_bp_hint;
+                if ("xueya".equals(item.getLieming())) {
+                    hintResId = R.string.home_checkroom_bp_hint;
+                } else if ("mailv".equals(item.getLieming())) {
+                    hintResId = R.string.home_checkroom_pulse_hint;
+                } else if ("tiwen".equals(item.getLieming())) {
+                    hintResId = R.string.home_checkroom_temperature_hint;
+                }
+                EditText et = helper.getView(R.id.et_input);
+                et.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (mCallback != null) {
+                            mCallback.textChanged(helper.getAdapterPosition(), s.toString());
+                        }
+                    }
+                });
+                et.setHint(hintResId);
                 break;
             case SPINNER_TYPE:
                 helper.setText(R.id.tv_title, item.getTitle());
@@ -105,5 +136,6 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
     public interface CheckRoomAdapterCallback{
         void toggle(int position, boolean isCheck, String id);
         void selectedItem(int position, String itemText);
+        void textChanged(int position, String text);
     }
 }

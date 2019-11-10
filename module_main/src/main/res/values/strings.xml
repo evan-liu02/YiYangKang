@@ -65,4 +65,8 @@
     <string name="home_add_accident_hint">请先输入事件描述</string>
     <string name="home_add_tip_success">提醒添加成功</string>
     <string name="home_audio_preparing">音频准备中&#8230;</string>
+    <string name="home_checkroom_bp_hint">mmHg</string>
+    <string name="home_checkroom_pulse_hint">次/分</string>
+    <string name="home_checkroom_temperature_hint">℃</string>
+
 </resources>
