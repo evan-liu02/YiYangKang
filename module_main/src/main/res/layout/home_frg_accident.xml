@@ -26,6 +26,7 @@
             android:layout_height="180dp"
             android:gravity="top|left"
             android:padding="@dimen/dp_10"
+            android:hint="@string/home_add_accident_hint"
             android:background="@color/common_white"
             android:inputType="text" />
 

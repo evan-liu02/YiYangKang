@@ -59,11 +59,11 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
     @BindView(R2.id.btn_record)
     Button mRecordBtn;
 
-    /*@BindView(R2.id.tv_record_time)
-    TextView mRecordTimeTv;*/
+    @BindView(R2.id.tv_record_time)
+    TextView mRecordTimeTv;
 
-    @BindView(R2.id.chronometer)
-    Chronometer mChronometer;
+    /*@BindView(R2.id.chronometer)
+    Chronometer mChronometer;*/
 
     @BindView(R2.id.btn_cancel)
     Button mCancelBtn;
@@ -101,7 +101,7 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
         hideToolbar();
         requestPermissions();
 //        initVoice();
-//        mRecordTimeTv.setText(String.format(getString(R.string.common_record_time), 0, 0));
+        mRecordTimeTv.setText(String.format(getString(R.string.common_record_time), 0, 0));
     }
 
     private void initVoice() {
@@ -222,10 +222,10 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
             try {
                 mr.prepare();
                 mr.start();  //开始录制
-//                startTimeCount();
+                startTimeCount();
                 mFilePath = soundFile.getAbsolutePath();
-                mChronometer.setBase(SystemClock.elapsedRealtime());
-                mChronometer.start();
+//                mChronometer.setBase(SystemClock.elapsedRealtime());
+//                mChronometer.start();
                 mRecordBtn.setText("停止录音");
                 isStart = true;
                 KLog.d("录音文件路径：" + mFilePath);
@@ -243,9 +243,10 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
             mr = null;
 //            stopTimeCount();
         }
-        mChronometer.stop();
-        mChronometer.setBase(SystemClock.elapsedRealtime()); // 重置
+//        mChronometer.stop();
+//        mChronometer.setBase(SystemClock.elapsedRealtime()); // 重置
         mRecordBtn.setText("开始录音");
+        stopTimeCount();
         isStart = false;
     }
 
@@ -277,7 +278,8 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
 
     @Override
     public void uploadSucc(BaseResponse response) {
-
+        showToast(R.string.home_add_tip_success);
+        finish();
     }
 
     private class MyRunnable implements Runnable {
@@ -287,7 +289,7 @@ public class AddTipAct extends BaseMvpActivity<AddTipPresenter, AddTipModel> imp
             mTimeCount++;
             int m = mTimeCount / 60;
             int s = mTimeCount % 60;
-//            mRecordTimeTv.setText(String.format(getString(R.string.common_record_time), m, s));
+            mRecordTimeTv.setText(String.format(getString(R.string.common_record_time), m, s));
             mHandler.postDelayed(this, 1000);
         }
     }

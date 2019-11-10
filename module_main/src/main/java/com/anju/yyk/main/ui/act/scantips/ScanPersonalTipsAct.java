@@ -34,8 +34,14 @@ import com.anju.yyk.main.entity.TipsEntity;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -98,6 +104,7 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
     private int mPlayStatus = 0;
 
     private String mTipId;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
     @Override
     protected int getLayoutId() {
@@ -167,6 +174,7 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
         for (NewTipsListResponse.ListBean bean : listBeans){
             String date = bean.getDate();
             if (bean.getRecords() != null && bean.getRecords().size() > 0){
+                List<TipsEntity> tempList = new ArrayList<TipsEntity>();
                 for (NewTipsListResponse.ListBean.RecordsBean record : bean.getRecords()){
                     TipsEntity tip = new TipsEntity();
                     tip.setDate(date);
@@ -185,8 +193,31 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
                             tip.addSubItem(luyin);
                         }
                     }
-                    mList.add(tip);
+                    tempList.add(tip);
+//                    mList.add(tip);
                 }
+                Collections.sort(tempList, new Comparator<TipsEntity>() {
+                    @Override
+                    public int compare(TipsEntity tipsEntity, TipsEntity t1) {
+                        String dateStr1 = tipsEntity.getDate() + " " + tipsEntity.getTime();
+                        String dateStr2 = t1.getDate() + " " + t1.getTime();
+                        try {
+                            long time1 = Objects.requireNonNull(dateFormat.parse(dateStr1)).getTime();
+                            long time2 = Objects.requireNonNull(dateFormat.parse(dateStr2)).getTime();
+                            if (time1 > time2) {
+                                return -1;
+                            } else if (time1 < time2) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        return 0;
+                    }
+                });
+                mList.addAll(tempList);
             }
         }
         mAdapter.notifyDataSetChanged();
@@ -205,9 +236,9 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
     }
 
     @Override
-    public void clickPlay(String audioUrl) {
+    public void clickPlay(ImageView image, String audioUrl) {
+        mPlayIv = image;
         prepareMediaPlayer(audioUrl);
-        startPlay();
     }
 
     @Override
@@ -244,8 +275,8 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(audioUrl);
-            mediaPlayer.prepare();
             initMediaPlayerListener();
+            mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -271,8 +302,13 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
         }
     }
 
+    private boolean isPlaying() {
+        return mediaPlayer != null && mediaPlayer.isPlaying();
+    }
+
     private void initMediaPlayerListener(){
         mediaPlayer.setOnPreparedListener(mp -> {
+            startPlay();
             int duration = mp.getDuration();
             if (0 != duration) {
                 //更新 seekbar 长度

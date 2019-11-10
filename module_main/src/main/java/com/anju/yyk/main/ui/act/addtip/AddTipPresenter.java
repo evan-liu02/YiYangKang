@@ -4,20 +4,14 @@ import android.text.TextUtils;
 
 import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.base.BaseResponse;
-import com.anju.yyk.common.entity.response.JisShuResponse;
-import com.anju.yyk.common.entity.response.UploadAudioResponse;
+import com.anju.yyk.common.entity.response.UploadFileResponse;
 import com.anju.yyk.common.utils.klog.KLog;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
-
-import java.io.File;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 public class AddTipPresenter extends IAddTipContract.AddTipPresenter {
     @Override
@@ -49,7 +43,7 @@ public class AddTipPresenter extends IAddTipContract.AddTipPresenter {
                     });
             addDisposable(tipDisposable);
         } else {
-            Observable<UploadAudioResponse> observable = mModel.uploadAudio(filePath);
+            Observable<UploadFileResponse> observable = mModel.uploadAudio(filePath);
             Disposable disposable = observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(s -> {

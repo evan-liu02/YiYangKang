@@ -59,4 +59,5 @@ public class ApiAction {
     /** 已读*/
     public static final String READED_ACTION = "yidu";
     public static final String SOUND_ACTION = "UpLoadFile";
+    public static final String ADD_ACCIDENT_ACTION = "shigu_add";
 }

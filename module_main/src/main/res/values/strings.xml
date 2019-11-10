@@ -62,4 +62,7 @@
     <string name="home_no_external_storage_tip">请先授予“怡养康”访问存储空间的权限</string>
     <string name="home_no_record_audio_tip">请先授予“怡养康”录制音频的权限</string>
     <string name="home_add_tip_hint">请先输入提醒内容</string>
+    <string name="home_add_accident_hint">请先输入事件描述</string>
+    <string name="home_add_tip_success">提醒添加成功</string>
+    <string name="home_audio_preparing">音频准备中&#8230;</string>
 </resources>

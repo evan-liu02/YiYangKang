@@ -17,7 +17,7 @@ import com.anju.yyk.common.entity.response.JisShuResponse;
 import com.anju.yyk.common.entity.response.LoginResponse;
 import com.anju.yyk.common.entity.response.OperationResponse;
 import com.anju.yyk.common.entity.response.PersonListResponse;
-import com.anju.yyk.common.entity.response.UploadAudioResponse;
+import com.anju.yyk.common.entity.response.UploadFileResponse;
 
 import java.util.Map;
 
@@ -25,8 +25,6 @@ import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -349,7 +347,26 @@ public interface ApiService {
      */
     @Multipart
     @POST(ApiAddr.UPLOAD_PATH)
-    Observable<UploadAudioResponse> uploadAudio(@Query("action") String action, @Query("name") String name, @Part MultipartBody.Part file);
+    Observable<UploadFileResponse> uploadAudio(@Query("action") String action, @Query("name") String name, @Part MultipartBody.Part file);
+
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     */
+    @Multipart
+    @POST(ApiAddr.UPLOAD_PATH)
+    Observable<UploadFileResponse> uploadFile(@Query("action") String action, @Query("name") String name, @Part MultipartBody.Part file);
+
+    /**
+     * 上传图片
+     * @param file
+     * @return
+     */
+    @Multipart
+    @POST(ApiAddr.UPLOAD_PATH)
+    Observable<UploadFileResponse> uploadImage(@Query("action") String action, @Query("name") String name, @Query("type") String type,
+                                               @Query("isThumbnai") int isThumb, @Query("isWater") int isWater, @Part MultipartBody.Part file);
 
     /**
      * 添加提醒
@@ -362,6 +379,20 @@ public interface ApiService {
      */
     @POST(ApiAddr.PATH)
     Observable<BaseResponse> addTip(@Query("action") String action, @Query("laoren_id") String id, @Query("hugong_id") String userId, @Query("content") String content, @Query("tipAudioPath") String tipAudioPath);
+
+    /**
+     * 添加事故
+     * @param action
+     * @param id
+     * @param userId
+     * @param content
+     * @param audioPath
+     * @param imagePath
+     * @return
+     */
+    @POST(ApiAddr.PATH)
+    Observable<BaseResponse> addAccident(@Query("action") String action, @Query("laoren_id") String id, @Query("hugong_id") String userId,
+                                         @Query("content") String content, @Query("audio_path") String audioPath, @Query("image_path") String imagePath);
 
     /**
      * 上传图片

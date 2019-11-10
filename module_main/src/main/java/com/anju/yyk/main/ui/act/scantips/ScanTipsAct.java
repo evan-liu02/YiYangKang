@@ -200,7 +200,7 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
     }
 
     @Override
-    public void clickPlay(String audioUrl) {
+    public void clickPlay(ImageView image, String audioUrl) {
 
         if (mediaPlayer == null)
             mediaPlayer = new MediaPlayer();

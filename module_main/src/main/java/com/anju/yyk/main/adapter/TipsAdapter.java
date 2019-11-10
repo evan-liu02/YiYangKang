@@ -2,6 +2,7 @@ package com.anju.yyk.main.adapter;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.anju.yyk.common.app.Constants;
 import com.anju.yyk.common.entity.response.TipsListResponse;
@@ -105,12 +106,20 @@ public class TipsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                     helper.setText(R.id.tv_audio_title, "护理语音");
                     helper.getView(R.id.iv_play_audio).setOnClickListener(v -> {
                         if (mCallback != null)
-                            mCallback.clickPlay(Constants.AUDIO_HEAD + audio.getLujing());
+                            if (!audio.getLujing().startsWith("http")) {
+                                mCallback.clickPlay(helper.getView(R.id.iv_play_audio),Constants.AUDIO_HEAD + audio.getLujing());
+                            } else {
+                                mCallback.clickPlay(helper.getView(R.id.iv_play_audio), audio.getLujing());
+                            }
                     });
 
                     helper.getView(R.id.iv_audio_download).setOnClickListener(v -> {
                         if (mCallback != null)
-                            mCallback.downLoadAudio(Constants.AUDIO_HEAD + audio.getLujing());
+                            if (!audio.getLujing().startsWith("http")) {
+                                mCallback.downLoadAudio(Constants.AUDIO_HEAD + audio.getLujing());
+                            } else {
+                                mCallback.downLoadAudio(audio.getLujing());
+                            }
                     });
                 }
                 break;
@@ -122,7 +131,7 @@ public class TipsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
     }
 
     public interface TipsCallBack{
-        void clickPlay(String audioUrl);
+        void clickPlay(ImageView image, String audioUrl);
         void downLoadAudio(String audioUrl);
         void clickRead(int position, String zhuyi_id);
     }

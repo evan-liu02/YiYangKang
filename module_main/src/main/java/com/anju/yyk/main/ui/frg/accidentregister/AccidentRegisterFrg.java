@@ -1,8 +1,10 @@
 package com.anju.yyk.main.ui.frg.accidentregister;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
@@ -13,11 +15,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anju.yyk.common.app.Constants;
 import com.anju.yyk.common.app.arouter.RouterKey;
+import com.anju.yyk.common.app.sp.AppSP;
 import com.anju.yyk.common.base.BaseFragment;
 import com.anju.yyk.common.base.BaseMvpFragment;
 import com.anju.yyk.common.base.BaseResponse;
@@ -44,14 +49,20 @@ import com.anju.yyk.main.adapter.TakePhotoAdapter;
 import com.anju.yyk.main.entity.PhotoEntity;
 import com.anju.yyk.main.ui.act.addtip.AddTipAct;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, AccidentRegModel> implements IAccidentRegContract.IAccidentRegView{
 
@@ -105,6 +116,11 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
     private Handler mHandler = new Handler();
 
     private PersonListResponse.ListBean mPersonInfo;
+    private AppSP mAppSP;
+    private Queue<String> imagePathList = new LinkedList<String>(); // 存放要上传的图片的路径
+    private List<String> imageNameList = new ArrayList<String>(); // 存放上传成功的图片的路径
+    private String content;
+    private String audioPath; // 服务器返回的音频路径
 
     @Override
     public int getLayoutId() {
@@ -116,7 +132,11 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
         if (getArguments() != null){
             mPersonInfo = (PersonListResponse.ListBean) getArguments().getSerializable(RouterKey.BUNDLE_TAG);
         }
-        initVoice();
+
+        if (getContext() != null) {
+            mAppSP = new AppSP(getContext());
+        }
+//        initVoice();
         initRecyclerView();
         mImageCompress = new ImageCompress();
         mRecordTimeTv.setText(String.format(getString(R.string.common_record_time), 0, 0));
@@ -129,6 +149,39 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
         }
     }
 
+    private boolean isMarshmallow() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    private boolean hasPermission(String permission) {
+        return !isMarshmallow() || (getContext() != null && ContextCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestPermissions(String... permissions) {
+        RxPermissions rxPermission = new RxPermissions(this);
+        Disposable disposable = rxPermission.requestEach(permissions)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission.name)
+                                    && hasPermission(Manifest.permission.CAMERA)) {
+                                openCamera();
+                            }
+                            if (Manifest.permission.CAMERA.equals(permission.name)
+                                    && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                openCamera();
+                            }
+                            // 用户已经同意该权限
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时。还会提示请求权限的对话框
+                        } else {
+                            // 用户拒绝了该权限，而且选中『不再询问』
+                        }
+                    }
+                });
+    }
+
     @Override
     public void initListener() {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -136,7 +189,13 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PhotoEntity entity = photos.get(position);
                 if (entity.getItemType() == PhotoEntity.ADD_TYPE){
-                    openCamera();
+                    if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    } else if (!hasPermission(Manifest.permission.CAMERA)) {
+                        requestPermissions(Manifest.permission.CAMERA);
+                    } else {
+                        openCamera();
+                    }
                 }
             }
         });
@@ -254,7 +313,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                         // 文件名
                         String filename = TimeUtil.getStringTimestamp();
                         if (!TextUtils.isEmpty(filename)){
-                            mSmallPicFilePath = Constants.SAVE_DIR + File.separator + filename;
+                            mSmallPicFilePath = Constants.SAVE_DIR + File.separator + filename + ".jpg";
                             if (smallBitmap != null){
                                 FileUtil.createImageFile(mSmallPicFilePath, smallBitmap, Bitmap.CompressFormat.JPEG);
                                 PhotoEntity photo = new PhotoEntity(PhotoEntity.NORMAL_TYPE);
@@ -262,6 +321,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                                 photo.setPhotoPath(mSmallPicFilePath);
                                 photos.add(photo);
                                 mAdapter.notifyDataSetChanged();
+                                imagePathList.offer(mSmallPicFilePath);
                                 // 此处上传图片
 //                                mPresenter.uploadPhoto(mSmallPicFilePath);
                                 smallBitmap = null;
@@ -317,12 +377,64 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
 
     @Override
     public void uploadSucc() {
-        showToast("上传照片成功");
+
+    }
+
+    private void uploadFile() {
+        int size = imagePathList.size();
+        if (size > 0) {
+            mPresenter.uploadFile(imagePathList.poll());
+        } else {
+            String imagePath = "";
+            if (imageNameList.size() > 0) {
+                StringBuilder builder = new StringBuilder();
+                int imageSize = imageNameList.size();
+                for (int i = 0; i < imageSize; i++) {
+                    builder.append(imageNameList.get(i));
+                    if (i < imageSize - 1) {
+                        builder.append(",");
+                    }
+                }
+                imagePath = builder.toString();
+                Log.e("Test", audioPath + ", " + imagePath);
+            }
+            mPresenter.addAccident(mPersonInfo.getId(), mAppSP.getUserId(), content, audioPath, imagePath);
+        }
+    }
+
+    @Override
+    public void uploadSucc(String filePath) {
+//        showToast("上传照片成功");
+        if (filePath != null) {
+            if (filePath.endsWith("jpg")) {
+                if (!imageNameList.contains(filePath)) {
+                    imageNameList.add(filePath);
+                }
+            } else if (filePath.endsWith("mmp3")) {
+                audioPath = filePath;
+            }
+        }
+        uploadFile();
+    }
+
+    @Override
+    public void uploadFailed(String filePath) {
+        uploadFile();
     }
 
     @Override
     public void uploadSucc(BaseResponse response) {
-        showToast("上传音频成功");
+//        showToast("上传音频成功");
+    }
+
+    @Override
+    public void addAccidentSuccess() {
+
+    }
+
+    @Override
+    public void addAccidentFailed() {
+
     }
 
     private class MyRunnable implements Runnable {
@@ -350,18 +462,40 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 isStart = false;
             }
         }else if (v.getId() == R.id.btn_commit){
-            if (!TextUtils.isEmpty(mFilePath)){
-                String content = mContentEdt.getText().toString().trim();
-                mPresenter.uploadAudio(content, mFilePath);
+            content = mContentEdt.getText().toString().trim();
+            if (TextUtils.isEmpty(content)) {
+                showToast(R.string.home_add_accident_hint);
+                return;
+            }
+            if (isStart) {
+                stopRecord();
+            }
+            if (!TextUtils.isEmpty(mFilePath)) {
+                mPresenter.uploadFile(mFilePath);
+            } else if (imagePathList.size() > 0) {
+                uploadFile();
+            } else {
+                mPresenter.addAccident(mPersonInfo.getId(), mAppSP.getUserId(), content, "", "");
             }
         }
     }
 
-    private void startRecord(){
-        if(mr == null){
+    private void startRecord() {
+        if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return;
+        }
+        File audioDir = new File(Environment.getExternalStorageDirectory(), AUDIO_DIR_NAME);
+        if (mr == null) {
             mFilePath = "";
-            File soundFile = new File(mAudioDir,System.currentTimeMillis()+".amr");
-            if(!soundFile.exists()){
+            if (!audioDir.exists()) {
+                boolean success = audioDir.mkdirs();
+                if (!success) {
+                    return;
+                }
+            }
+            File soundFile = new File(audioDir, System.currentTimeMillis() + ".amr");
+            if (!soundFile.exists()) {
                 try {
                     soundFile.createNewFile();
                 } catch (IOException e) {

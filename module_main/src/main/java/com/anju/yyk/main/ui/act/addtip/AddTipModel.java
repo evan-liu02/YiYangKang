@@ -3,11 +3,10 @@ package com.anju.yyk.main.ui.act.addtip;
 import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.base.BaseModel;
 import com.anju.yyk.common.base.BaseResponse;
-import com.anju.yyk.common.entity.response.UploadAudioResponse;
+import com.anju.yyk.common.entity.response.UploadFileResponse;
 import com.anju.yyk.common.http.ApiAction;
 import com.anju.yyk.common.http.NetManager;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
-import com.anju.yyk.main.ui.act.addtip.IAddTipContract.IAddTipModel;
 
 import java.io.File;
 
@@ -42,7 +41,7 @@ public class AddTipModel extends BaseModel implements IAddTipContract.IAddTipMod
     }
 
     @Override
-    public Observable<UploadAudioResponse> uploadAudio(String filePath) {
+    public Observable<UploadFileResponse> uploadAudio(String filePath) {
         File file = new File(filePath);
         RequestBody requestFile = RequestBody.create(file, MediaType.parse("multipart/form-data"));
         MultipartBody.Part body = MultipartBody.Part.createFormData("aFile", file.getName(), requestFile);

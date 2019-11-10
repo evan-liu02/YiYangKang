@@ -3,7 +3,7 @@ package com.anju.yyk.common.entity.response;
 /**
  *
  */
-public class UploadAudioResponse {
+public class UploadFileResponse {
     private int status;
     private String msg;
     private String ext;
