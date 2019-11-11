@@ -93,7 +93,7 @@ public class BedListAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, B
                 }else {
                     helper.setImageResource(R.id.iv_sex, R.mipmap.home_ic_male);
                 }
-                helper.setText(R.id.tv_age, infoEntity.getNianling())
+                helper.setText(R.id.tv_age, infoEntity.getNianling() + "岁")
                         .setText(R.id.tv_name, infoEntity.getName())
                         .setText(R.id.tv_bedid, infoEntity.getChuangwei() + "床")
                         .setText(R.id.tv_tag, infoEntity.getHulijibie());

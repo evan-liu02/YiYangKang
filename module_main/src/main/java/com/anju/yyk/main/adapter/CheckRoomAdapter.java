@@ -83,7 +83,7 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
                     SpinnerTextFormatter textFormatter = new SpinnerTextFormatter<CheckRoomListResponse.ListBean.OptionBean>() {
                         @Override
                         public Spannable format(CheckRoomListResponse.ListBean.OptionBean item) {
-                            return new SpannableString(item.getMingcheng() + "|" + item.getZhi());
+                            return new SpannableString(item.getZhi());
                         }
                     };
                     np.setSpinnerTextFormatter(textFormatter);

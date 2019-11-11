@@ -170,16 +170,16 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         mPtrFl.refreshComplete();
 
         BedTitleEntity entity2 = new BedTitleEntity();
-        entity2.setTitle("1-15");
+        entity2.setTitle("1-15床");
 
         BedTitleEntity entity3 = new BedTitleEntity();
-        entity3.setTitle("16-30");
+        entity3.setTitle("16-30床");
 
         BedTitleEntity entity4 = new BedTitleEntity();
-        entity4.setTitle("31-45");
+        entity4.setTitle("31-45床");
 
         BedTitleEntity entity5 = new BedTitleEntity();
-        entity5.setTitle("46-55");
+        entity5.setTitle("46-55床");
 
         for (PersonListResponse.ListBean bean : list){
             if (1 <= bean.getChuangwei() && 15 >= bean.getChuangwei()){

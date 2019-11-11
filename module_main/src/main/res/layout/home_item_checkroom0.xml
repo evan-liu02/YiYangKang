@@ -20,10 +20,10 @@
     <EditText
         android:id="@+id/et_input"
         style="@style/common_text_small_default"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_60"
+        android:textAlignment="textEnd"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:paddingLeft="@dimen/dp_20"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

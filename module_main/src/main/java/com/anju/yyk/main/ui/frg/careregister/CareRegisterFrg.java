@@ -64,7 +64,8 @@ public class CareRegisterFrg extends BaseMvpFragment<CareRegPresenter, CareRegMo
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
                 HuLiXiangmu0Response.ListBean bean = (HuLiXiangmu0Response.ListBean) data;
-                showToast("点击的id：" + bean.getId());
+//                showToast("点击的id：" + bean.getId());
+                // TODO 是否需要加入提示对话框
                 mPresenter.commitHuli(bean.getId(), bean.getJifen(), bean.getTitle(), mPersonInfo.getId()
                                     , mAppSP.getUserId());
             }
@@ -90,9 +91,11 @@ public class CareRegisterFrg extends BaseMvpFragment<CareRegPresenter, CareRegMo
     public void getHuli0Succ(HuLiXiangmu0Response response) {
         List<HuLiXiangmu0Response.ListBean> listBeans = response.getList();
         if (listBeans != null && listBeans.size() > 0){
-            for (HuLiXiangmu0Response.ListBean bean : listBeans){
+            mLabel0.clear();
+            mLabel0.addAll(listBeans);
+            /*for (HuLiXiangmu0Response.ListBean bean : listBeans){
                 mLabel0.add(bean);
-            }
+            }*/
             mUnCompleteLv.setLabels(mLabel0, (label1, position, data) -> data.getTitle());
         }
         mPresenter.huli1(mPersonInfo.getId());
@@ -102,9 +105,11 @@ public class CareRegisterFrg extends BaseMvpFragment<CareRegPresenter, CareRegMo
     public void getHuli1Succ(HuLiXiangmu1Response response) {
         List<HuLiXiangmu1Response.ListBean> listBeans = response.getList();
         if (listBeans != null && listBeans.size() > 0){
-            for (HuLiXiangmu1Response.ListBean bean : listBeans){
+            mLabel1.clear();
+            mLabel1.addAll(listBeans);
+            /*for (HuLiXiangmu1Response.ListBean bean : listBeans){
                 mLabel1.add(bean);
-            }
+            }*/
             mCompleteLv.setLabels(mLabel1, (label1, position, data) -> data.getTitle() + "x" + data.getCishu());
         }
     }

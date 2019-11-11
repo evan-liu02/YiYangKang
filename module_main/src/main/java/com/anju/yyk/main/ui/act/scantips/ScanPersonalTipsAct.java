@@ -134,7 +134,7 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
         }else {
             mSexIv.setImageResource(R.mipmap.home_ic_male);
         }
-        mAgeTv.setText(mPersonInfo.getNianling());
+        mAgeTv.setText(mPersonInfo.getNianling() + "岁");
         mNameTv.setText(mPersonInfo.getName());
         mBedIdTv.setText(mPersonInfo.getChuangwei() + "号床");
         mTagTv.setText(mPersonInfo.getHulijibie());

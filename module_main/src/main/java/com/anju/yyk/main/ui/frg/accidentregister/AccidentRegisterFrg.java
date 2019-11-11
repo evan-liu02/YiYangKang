@@ -119,6 +119,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
     private AppSP mAppSP;
     private Queue<String> imagePathList = new LinkedList<String>(); // 存放要上传的图片的路径
     private List<String> imageNameList = new ArrayList<String>(); // 存放上传成功的图片的路径
+    private List<String> failedImageList = new ArrayList<String>(); // 存放上传失败的图片路径
     private String content;
     private String audioPath; // 服务器返回的音频路径
 
@@ -171,6 +172,9 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                             if (Manifest.permission.CAMERA.equals(permission.name)
                                     && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                                 openCamera();
+                            }
+                            if (Manifest.permission.RECORD_AUDIO.equals(permission.name)) {
+                                startRecord();
                             }
                             // 用户已经同意该权限
                         } else if (permission.shouldShowRequestPermissionRationale) {
@@ -410,7 +414,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 if (!imageNameList.contains(filePath)) {
                     imageNameList.add(filePath);
                 }
-            } else if (filePath.endsWith("mmp3")) {
+            } else if (filePath.endsWith("mp3")) {
                 audioPath = filePath;
             }
         }
@@ -419,6 +423,9 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
 
     @Override
     public void uploadFailed(String filePath) {
+        if (filePath.endsWith("jpg")) {
+            failedImageList.add(filePath);
+        }
         uploadFile();
     }
 
@@ -454,8 +461,8 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
         if (v.getId() == R.id.btn_record){
             if(!isStart){
                 startRecord();
-                mRecordBtn.setText("停止录音");
-                isStart = true;
+//                mRecordBtn.setText("停止录音");
+//                isStart = true;
             }else{
                 stopRecord();
                 mRecordBtn.setText("开始录音");
@@ -470,6 +477,10 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
             if (isStart) {
                 stopRecord();
             }
+            if (failedImageList.size() > 0) {
+                imagePathList.addAll(failedImageList);
+                failedImageList.clear();
+            }
             if (!TextUtils.isEmpty(mFilePath)) {
                 mPresenter.uploadFile(mFilePath);
             } else if (imagePathList.size() > 0) {
@@ -483,6 +494,11 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
     private void startRecord() {
         if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return;
+        }
+
+        if (!hasPermission(Manifest.permission.RECORD_AUDIO)) {
+            requestPermissions(Manifest.permission.RECORD_AUDIO);
             return;
         }
         File audioDir = new File(Environment.getExternalStorageDirectory(), AUDIO_DIR_NAME);
@@ -512,6 +528,8 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 mr.start();  //开始录制
                 startTimeCount();
                 mFilePath = soundFile.getAbsolutePath();
+                mRecordBtn.setText("停止录音");
+                isStart = true;
                 KLog.d("录音文件路径：" + mFilePath);
             } catch (IOException e) {
                 e.printStackTrace();

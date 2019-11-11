@@ -99,7 +99,7 @@
 
     <TextView
         android:id="@+id/tv_tag"
-        style="@style/common_text_tag_white"
+        style="@style/common_text_small_white"
         android:background="@drawable/common_corner_theme_btn_bg"
         android:paddingStart="@dimen/common_space_10"
         android:paddingEnd="@dimen/common_space_10"

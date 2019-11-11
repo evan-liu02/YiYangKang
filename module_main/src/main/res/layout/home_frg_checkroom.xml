@@ -1,22 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/common_bg_gray">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    <Button
-        android:id="@+id/btn_commit"
-        style="@style/common_text_small_white"
-        android:background="@color/common_theme"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_43"
-        android:text="提交" />
+        </androidx.recyclerview.widget.RecyclerView>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/home_textview9"
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="巡查记录" />
+
+        <EditText
+            android:id="@+id/edt_content"
+            style="@style/common_text_small_default"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:gravity="top|left"
+            android:padding="@dimen/dp_10"
+            android:hint="请输入巡查记录"
+            android:background="@color/common_white"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/home_textview"
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="添加照片" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/common_white"
+            android:padding="@dimen/dp_10"/>
+
+        <Button
+            android:id="@+id/btn_commit"
+            style="@style/common_text_small_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_43"
+            android:background="@color/common_theme"
+            android:text="提交" />
+    </LinearLayout>
+
+</ScrollView>

@@ -288,7 +288,7 @@ public interface ApiService {
     @POST(ApiAddr.PATH)
     Observable<BaseResponse> checkRoomCommit(@Query("action") String action, @Query("hugong_id") String hugong_id
             , @Query("txtContent") String txtContent, @Query("isCheck") int isCheck, @Query("laoren_id") String laoren_id
-            , @QueryMap Map<String, String> map);
+            , @QueryMap Map<String, String> map, @Query("image_path") String image_path);
 
     /**
      * 查房信息
