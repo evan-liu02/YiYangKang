@@ -68,7 +68,7 @@ public class HomePresenter extends IHomeContract.HomePresenter {
                     }else {
                         getView().hideLoading();
                         getView().refreshComplete();
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
                         getView().noTop();
                     }
                 }, throwable -> {

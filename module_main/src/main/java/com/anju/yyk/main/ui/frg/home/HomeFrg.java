@@ -121,7 +121,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         // 添加header
         mPtrFl.addPtrUIHandler(header);
         // 设置刷新头部布局
-        mPtrFl.setHeaderView(header);
+//        mPtrFl.setHeaderView(header);
         // 设置监听
         mPtrFl.setPtrHandler(this);
         // 下拉，上拉
