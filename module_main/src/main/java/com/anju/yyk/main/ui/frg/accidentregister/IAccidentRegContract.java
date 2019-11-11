@@ -5,6 +5,7 @@ import com.anju.yyk.common.base.BaseResponse;
 import com.anju.yyk.common.base.IBaseModel;
 import com.anju.yyk.common.base.IBaseView;
 import com.anju.yyk.common.entity.response.UploadFileResponse;
+import com.anju.yyk.common.entity.response.UploadImageResponse;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -15,7 +16,7 @@ public interface IAccidentRegContract {
         Observable<BaseResponse> addTip(RequestBody des, MultipartBody.Part file);
         Observable<BaseResponse> requestUploadPhoto(MultipartBody.Part imageFile);
         Observable<UploadFileResponse> uploadFile(String name, MultipartBody.Part file);
-        Observable<UploadFileResponse> uploadImage(String name, String type, int isThumb, int isWater, MultipartBody.Part file);
+        Observable<UploadImageResponse> uploadImage(String name, MultipartBody.Part file);
         Observable<BaseResponse> addAccident(String id, String userId, String content, String audioPath, String imagePath);
     }
 
@@ -32,7 +33,7 @@ public interface IAccidentRegContract {
         public abstract void uploadPhoto(String imgPath);
         public abstract void uploadAudio(String content, String filePath);
         public abstract void uploadFile(String filePath);
-        public abstract void uploadImage(String filePath, String type, int isThumb, int isWater);
+        public abstract void uploadImage(String filePath);
         public abstract void addAccident(String id, String userId, String content, String audioPath, String imagePath);
     }
 }

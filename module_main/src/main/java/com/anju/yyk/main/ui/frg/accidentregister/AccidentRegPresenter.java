@@ -3,6 +3,7 @@ package com.anju.yyk.main.ui.frg.accidentregister;
 import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.base.BaseResponse;
 import com.anju.yyk.common.entity.response.UploadFileResponse;
+import com.anju.yyk.common.entity.response.UploadImageResponse;
 import com.anju.yyk.common.utils.klog.KLog;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 
@@ -106,22 +107,22 @@ public class AccidentRegPresenter extends IAccidentRegContract.AccidentReg{
     }
 
     @Override
-    public void uploadImage(String filePath, String type, int isThumb, int isWater) {
+    public void uploadImage(String filePath) {
         File file = new File(filePath);
-        RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/png"));
-        MultipartBody.Part body = MultipartBody.Part.createFormData("aFile", file.getName(), requestFile);
+        RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/jpeg"));
+        MultipartBody.Part body = MultipartBody.Part.createFormData("upfile", file.getName(), requestFile);
 
-        Observable<UploadFileResponse> observable = mModel.uploadImage(file.getName(), type, isThumb, isWater, body);
+        Observable<UploadImageResponse> observable = mModel.uploadImage(file.getName(),body);
         Disposable disposable = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
                     KLog.d("上传图片成功");
-                    if (s.getStatus() == 1) {
+                    if ("SUCCESS".equals(s.getState())) {
                         getView().hideLoading();
-                        getView().uploadSucc(s.getPath());
+                        getView().uploadSucc(s.getUrl());
                     } else {
                         getView().hideLoading();
-                        getView().showToast(s.getMsg());
+//                        getView().showToast(s.getMsg());
                         getView().uploadFailed(filePath);
                     }
                 }, throwable -> {

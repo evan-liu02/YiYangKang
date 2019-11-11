@@ -18,6 +18,7 @@ import com.anju.yyk.common.entity.response.LoginResponse;
 import com.anju.yyk.common.entity.response.OperationResponse;
 import com.anju.yyk.common.entity.response.PersonListResponse;
 import com.anju.yyk.common.entity.response.UploadFileResponse;
+import com.anju.yyk.common.entity.response.UploadImageResponse;
 
 import java.util.Map;
 
@@ -365,8 +366,7 @@ public interface ApiService {
      */
     @Multipart
     @POST(ApiAddr.UPLOAD_PATH)
-    Observable<UploadFileResponse> uploadImage(@Query("action") String action, @Query("name") String name, @Query("type") String type,
-                                               @Query("isThumbnai") int isThumb, @Query("isWater") int isWater, @Part MultipartBody.Part file);
+    Observable<UploadImageResponse> uploadImage(@Query("action") String action, @Query("name") String name, @Part MultipartBody.Part file);
 
     /**
      * 添加提醒

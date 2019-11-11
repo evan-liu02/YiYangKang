@@ -4,6 +4,7 @@ import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.base.BaseModel;
 import com.anju.yyk.common.base.BaseResponse;
 import com.anju.yyk.common.entity.response.UploadFileResponse;
+import com.anju.yyk.common.entity.response.UploadImageResponse;
 import com.anju.yyk.common.http.ApiAction;
 import com.anju.yyk.common.http.NetManager;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
@@ -48,8 +49,8 @@ public class AccidentRegModel extends BaseModel implements IAccidentRegContract.
     }
 
     @Override
-    public Observable<UploadFileResponse> uploadImage(String name, String type, int isThumb, int isWater, MultipartBody.Part file) {
-        return mNetManager.getApiService().uploadImage(ApiAction.SOUND_ACTION, name, type, isThumb, isWater, file);
+    public Observable<UploadImageResponse> uploadImage(String name, MultipartBody.Part file) {
+        return mNetManager.getApiService().uploadImage(ApiAction.UPLOAD_IMAGE_ACTION, name, file);
     }
 
     @Override

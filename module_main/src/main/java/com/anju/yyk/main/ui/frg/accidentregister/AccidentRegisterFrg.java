@@ -383,7 +383,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
     private void uploadFile() {
         int size = imagePathList.size();
         if (size > 0) {
-            mPresenter.uploadFile(imagePathList.poll());
+            mPresenter.uploadImage(imagePathList.poll());
         } else {
             String imagePath = "";
             if (imageNameList.size() > 0) {
