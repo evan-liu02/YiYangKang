@@ -1,7 +1,10 @@
 package com.anju.yyk.main.ui.frg.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -32,11 +35,14 @@ import com.anju.yyk.main.R2;
 import com.anju.yyk.main.adapter.BedListAdapter;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 import com.anju.yyk.main.entity.BedTitleEntity;
+import com.anju.yyk.main.utils.IconReplacementSpan;
 import com.anju.yyk.main.widget.AddTipDialog;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -151,7 +157,17 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
 
     @Override
     public void getAttentionCountSucc(AttentionCountResponse response) {
-        mTopTv.setText("有新注意事项" + response.getCount() + "条");
+        String str = "有新注意事项" + response.getCount() + "条";
+        SpannableString spannableStr = new SpannableString(str);
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(str);
+        while (matcher.find()) {
+            int start = matcher.start(0);
+            int end = matcher.end(0);
+            IconReplacementSpan hSpan = new IconReplacementSpan(getContext(), Color.RED, Color.WHITE, matcher.group(0));
+            spannableStr.setSpan(hSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mTopTv.setText(spannableStr);
+        }
         mPtrFl.autoRefresh();
     }
 

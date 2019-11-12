@@ -59,7 +59,7 @@ public class HomePageAct extends BaseActivity {
 
     @Override
     protected void init() {
-        mToolbar.ivIsShow(false, true);
+        mToolbar.ivIsShow(false, false);
         setToolbarTopic(R.string.home_topic_appname);
         mToolbar.setRightIvSrc(R.mipmap.home_ic_exchange);
         prepareFrg();
@@ -80,12 +80,15 @@ public class HomePageAct extends BaseActivity {
                     position = 0;
                     switchFrg(mHomeFrg).commit();
                 }else if (item.getItemId() == R.id.menu_review){
-                    position = 1;
+                    position = 2;
 //                    switchFrg(mPatrolFrg).commit();
                     switchFrg(mPatrolWebFrg).commit();
                 }else if (item.getItemId() == R.id.menu_record){
-                    position = 2;
+                    position = 3;
                     switchFrg(mRecordFrg).commit();
+                } else if (item.getItemId() == R.id.menu_exchange) {
+                    position = 1;
+                    rightIvListener();
                 }
                 mCurItemPosition = position;
                 return true;
@@ -144,7 +147,7 @@ public class HomePageAct extends BaseActivity {
 
                     break;
                 case EventConstant.EventCode.REFRESH_RECORDLIST_FRG:
-                    if (mCurItemPosition == 2)
+                    if (mCurItemPosition == 3)
                         switchFrg(mRecordFrg).commit();
                     break;
             }

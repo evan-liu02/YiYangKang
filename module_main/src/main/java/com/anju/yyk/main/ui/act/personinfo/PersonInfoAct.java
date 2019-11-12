@@ -177,7 +177,7 @@ public class PersonInfoAct extends BaseActivity {
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
                 simplePagerTitleView.setText(titles.get(index));
-                simplePagerTitleView.setTextSize(14);//设置导航的文字大小
+                simplePagerTitleView.setTextSize(20);//设置导航的文字大小
                 simplePagerTitleView.setMaxLines(3);
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(context, R.color.common_text_default));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(context, R.color.common_theme));

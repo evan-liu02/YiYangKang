@@ -7,6 +7,11 @@
         android:title="@string/home_maingage" />
 
     <item
+        android:id="@+id/menu_exchange"
+        android:icon="@mipmap/home_ic_exchange_nav"
+        android:title="@string/home_exchange" />
+
+    <item
         android:id="@+id/menu_review"
         android:icon="@mipmap/home_ic_safe"
         android:title="@string/home_review" />
