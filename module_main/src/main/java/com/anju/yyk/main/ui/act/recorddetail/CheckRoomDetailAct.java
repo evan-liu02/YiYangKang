@@ -68,7 +68,7 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
 
     @Override
     protected int getLayoutId() {
-        return R.layout.home_act_recorddetail;
+        return R.layout.home_act_room_detail;
     }
 
     @Override

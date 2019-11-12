@@ -1,6 +1,7 @@
 package com.anju.yyk.main.ui.frg.recordlist;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.anju.yyk.common.app.arouter.RouterConstants;
 import com.anju.yyk.common.app.arouter.RouterKey;
 import com.anju.yyk.common.app.sp.AppSP;
 import com.anju.yyk.common.base.BaseMvpFragment;
+import com.anju.yyk.common.entity.response.PersonListResponse;
 import com.anju.yyk.common.entity.response.RecordResponse;
 import com.anju.yyk.common.utils.AppUtil;
 import com.anju.yyk.common.utils.eventbus.Event;
@@ -26,6 +28,7 @@ import com.anju.yyk.main.R2;
 import com.anju.yyk.main.adapter.RecordAdapter;
 import com.anju.yyk.main.entity.RecordInfoEntity;
 import com.anju.yyk.main.entity.RecordTitleEntity;
+import com.anju.yyk.main.utils.PersonInfoHelper;
 import com.anju.yyk.main.widget.DatePickerDialog;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -89,6 +92,7 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
     private String mEndTime = "";
 
     private AppSP mAppSP;
+    private String selectedName = "所有人";
 
     @Override
     public int getLayoutId() {
@@ -98,6 +102,12 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
     @Override
     public void init() {
         mAppSP = new AppSP(mActivity);
+        if (PersonInfoHelper.personList != null) {
+            List<PersonListResponse.ListBean> personList = PersonInfoHelper.personList;
+            for (PersonListResponse.ListBean personBean : personList) {
+                dataset.add("[" + +personBean.getChuangwei() + "床" + "]" + personBean.getName());
+            }
+        }
         mManTypeNS.attachDataSource(dataset);
         initRecyclerView();
     }
@@ -108,6 +118,13 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
             @Override
             public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
                 String item = (String) parent.getItemAtPosition(position);
+                int index = item.indexOf("]");
+                if (index != -1) {
+                    selectedName = item.substring(index + 1);
+                    Log.e("Test", selectedName);
+                } else {
+                    selectedName = "所有人";
+                }
             }
         });
 
@@ -116,7 +133,7 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.tv_scan_detail){
                     RecordInfoEntity infoEntity = (RecordInfoEntity) mRecordInfoList.get(position);
-                    ARouter.getInstance().build(RouterConstants.ACT_URL_RECORD_DETAIL)
+                    ARouter.getInstance().build(RouterConstants.ACT_URL_ACCIDENT_DETAIL)
                             .withSerializable(RouterKey.RECORD_DETAIL_TAG, infoEntity)
                             .navigation();
                 }
@@ -211,10 +228,14 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
                         info.setLaoren(record.getId());
                         info.setName(record.getName());
                         info.setId(record.getId());
-                        title.addSubItem(info);
+                        if ("所有人".equals(selectedName) || selectedName.equals(record.getName())) {
+                            title.addSubItem(info);
+                        }
                     }
                 }
-                mRecordInfoList.add(title);
+                if (title.getSubItems() != null && title.getSubItems().size() > 0) {
+                    mRecordInfoList.add(title);
+                }
             }
             mAdapter.notifyDataSetChanged();
         }
@@ -223,7 +244,7 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
     @Override
     public void onSelectDate(String date) {
         if (!TextUtils.isEmpty(date)){
-            showToast(date);
+//            showToast(date);
             if (mTimeType == 0){
                 mStartTime = date;
                 mTimeStartTv.setText(mStartTime);

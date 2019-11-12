@@ -1,6 +1,7 @@
 package com.anju.yyk.main.ui.frg.recordlist;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.anju.yyk.common.app.arouter.RouterKey;
 import com.anju.yyk.common.app.sp.AppSP;
 import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.base.BaseMvpFragment;
+import com.anju.yyk.common.entity.response.PersonListResponse;
 import com.anju.yyk.common.entity.response.RecordResponse;
 import com.anju.yyk.common.utils.AppUtil;
 import com.anju.yyk.common.utils.eventbus.Event;
@@ -28,6 +30,7 @@ import com.anju.yyk.main.adapter.RecordAdapter;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 import com.anju.yyk.main.entity.RecordInfoEntity;
 import com.anju.yyk.main.entity.RecordTitleEntity;
+import com.anju.yyk.main.utils.PersonInfoHelper;
 import com.anju.yyk.main.widget.DatePickerDialog;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -92,6 +95,8 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
 
     private AppSP mAppSP;
 
+    private String selectedName = "所有人";
+
     @Override
     public int getLayoutId() {
         return R.layout.home_frg_recordlist;
@@ -100,6 +105,12 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
     @Override
     public void init() {
         mAppSP = new AppSP(mActivity);
+        if (PersonInfoHelper.personList != null) {
+            List<PersonListResponse.ListBean> personList = PersonInfoHelper.personList;
+            for (PersonListResponse.ListBean personBean : personList) {
+                dataset.add("[" + +personBean.getChuangwei() + "床" + "]" + personBean.getName());
+            }
+        }
         mManTypeNS.attachDataSource(dataset);
         initRecyclerView();
     }
@@ -110,6 +121,13 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
             @Override
             public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
                 String item = (String) parent.getItemAtPosition(position);
+                int index = item.indexOf("]");
+                if (index != -1) {
+                    selectedName = item.substring(index + 1);
+                    Log.e("Test", selectedName);
+                } else {
+                    selectedName = "所有人";
+                }
             }
         });
 
@@ -212,10 +230,14 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
                         info.setLaoren(record.getId());
                         info.setName(record.getName());
                         info.setId(record.getId());
-                        title.addSubItem(info);
+                        if ("所有人".equals(selectedName) || selectedName.equals(record.getName())) {
+                            title.addSubItem(info);
+                        }
                     }
                 }
-                mRecordInfoList.add(title);
+                if (title.getSubItems() != null && title.getSubItems().size() > 0) {
+                    mRecordInfoList.add(title);
+                }
             }
             mAdapter.notifyDataSetChanged();
         }
@@ -229,7 +251,7 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
     @Override
     public void onSelectDate(String date) {
         if (!TextUtils.isEmpty(date)){
-            showToast(date);
+//            showToast(date);
             if (mTimeType == 0){
                 mStartTime = date;
                 mTimeStartTv.setText(mStartTime);

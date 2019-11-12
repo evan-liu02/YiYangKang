@@ -30,6 +30,7 @@
     <string name="home_scan_detail">查看详情</string>
     <string name="home_care_record_title">护理记录：</string>
     <string name="home_care_detail">护理详情</string>
+    <string name="home_accident_detail">事故详情</string>
     <string name="home_checkroom_detail">查房详情</string>
     <string name="home_checkroom_record_title">查房记录：</string>
 

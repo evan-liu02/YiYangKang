@@ -4,6 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,8 @@ import com.anju.yyk.main.R;
 import com.anju.yyk.main.R2;
 import com.anju.yyk.main.adapter.AccidentDetailAdapter;
 import com.anju.yyk.main.adapter.RecordDetailAdapter;
+import com.anju.yyk.main.adapter.TakePhotoAdapter;
+import com.anju.yyk.main.entity.PhotoEntity;
 import com.anju.yyk.main.entity.RecordInfoEntity;
 
 import java.util.ArrayList;
@@ -46,24 +49,30 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
     @BindView(R2.id.tv_care_type)
     TextView mCareTypeTv;
 
+    @BindView(R2.id.tv_accident_content)
+    TextView mContentTv;
+
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
 
     @Autowired(name = RouterKey.RECORD_DETAIL_TAG)
     public RecordInfoEntity mInfoEntity;
 
-    private AccidentDetailAdapter mAdapter;
-    private List<AccidentDetailResponse.ListBean> mList = new ArrayList<>();
+    private TakePhotoAdapter mAdapter;
+    private List<PhotoEntity> photos = new ArrayList<>();
+
+    /*private AccidentDetailAdapter mAdapter;
+    private List<AccidentDetailResponse.ListBean> mList = new ArrayList<>();*/
 
     @Override
     protected int getLayoutId() {
-        return R.layout.home_act_recorddetail;
+        return R.layout.home_act_accident_detail;
     }
 
     @Override
     protected void init() {
         ARouter.getInstance().inject(this);
-        setToolbarTopic(R.string.home_care_detail);
+        setToolbarTopic(R.string.home_accident_detail);
         initRecyclerView();
     }
 
@@ -99,7 +108,7 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
     }
 
     private void initRecyclerView(){
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        /*mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -107,6 +116,17 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
         mAdapter = new AccidentDetailAdapter(mList);
+        mRecyclerView.setAdapter(mAdapter);*/
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        GridLayoutManager manager = new GridLayoutManager(mActivity, 3);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(0
+                , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
+
+        mAdapter = new TakePhotoAdapter(photos);
+        mAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -128,8 +148,16 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
             mAgeTv.setText(listBeans.get(0).getNianling() + "岁");
             mNumberBed.setText(listBeans.get(0).getChuangwei() + "床");
             mCareTypeTv.setText(listBeans.get(0).getHulijibie());
-            mList.clear();
+            // TODO 未返回照片路径
+            mContentTv.setText(listBeans.get(0).getContent());
+            /*mList.clear();
             mList.addAll(listBeans);
+            mAdapter.notifyDataSetChanged();*/
+
+            PhotoEntity photoEntity = new PhotoEntity(PhotoEntity.NORMAL_TYPE);
+            photoEntity.setPhotoPath("http://haohua.zhihuidangjian.com/upload/201911/11/201911111357474052.jpg");
+            photoEntity.setSpanSize(1);
+            photos.add(photoEntity);
             mAdapter.notifyDataSetChanged();
         }
     }

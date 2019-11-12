@@ -131,6 +131,7 @@ public class CareRecordDetailAct extends BaseMvpActivity<RecordDetailPresenter, 
 
     @Override
     public void careDetailSucc(CareDetailResponse response) {
+        // TODO 返回的护工名称不对
         List<CareDetailResponse.ListBean> listBeans = response.getList();
         if (listBeans != null && listBeans.size() > 0){
             mAgeTv.setText(listBeans.get(0).getNianling() + "岁");

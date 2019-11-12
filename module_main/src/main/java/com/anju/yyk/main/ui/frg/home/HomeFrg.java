@@ -36,6 +36,7 @@ import com.anju.yyk.main.adapter.BedListAdapter;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 import com.anju.yyk.main.entity.BedTitleEntity;
 import com.anju.yyk.main.utils.IconReplacementSpan;
+import com.anju.yyk.main.utils.PersonInfoHelper;
 import com.anju.yyk.main.widget.AddTipDialog;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -184,6 +185,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
     @Override
     public void getPersonListSucc(List<PersonListResponse.ListBean> list) {
         mPtrFl.refreshComplete();
+        PersonInfoHelper.personList = list;
 
         BedTitleEntity entity2 = new BedTitleEntity();
         entity2.setTitle("1-15床");

@@ -35,7 +35,11 @@ public class TakePhotoAdapter extends BaseMultiItemQuickAdapter<PhotoEntity, Bas
         switch (helper.getItemViewType()){
             case PhotoEntity.NORMAL_TYPE:
                 ImageView imageView = helper.getView(R.id.iv_photo);
-                mImageLoader.loadImgByLocal(item.getPhotoPath(), imageView);
+                if (item.getPhotoPath().startsWith("http")) {
+                    mImageLoader.loadImgByUrl(item.getPhotoPath(), imageView);
+                } else {
+                    mImageLoader.loadImgByLocal(item.getPhotoPath(), imageView);
+                }
                 break;
             case PhotoEntity.ADD_TYPE:
                 break;
