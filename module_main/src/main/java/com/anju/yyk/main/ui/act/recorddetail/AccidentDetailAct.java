@@ -1,5 +1,6 @@
 package com.anju.yyk.main.ui.act.recorddetail;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -128,6 +129,7 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
         mAdapter = new TakePhotoAdapter(photos);
         mAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setVisibility(View.GONE);
     }
 
 
@@ -166,6 +168,7 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
                     photos.add(photoEntity);
                 }
                 mAdapter.notifyDataSetChanged();
+                mRecyclerView.setVisibility(View.VISIBLE);
             }
         }
     }

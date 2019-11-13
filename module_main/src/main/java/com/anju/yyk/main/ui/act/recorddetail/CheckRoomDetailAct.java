@@ -1,9 +1,11 @@
 package com.anju.yyk.main.ui.act.recorddetail;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +23,8 @@ import com.anju.yyk.common.widget.itemdecoration.SpacesItemDecoration;
 import com.anju.yyk.main.R;
 import com.anju.yyk.main.R2;
 import com.anju.yyk.main.adapter.CheckRoomDetailAdapter;
+import com.anju.yyk.main.adapter.TakePhotoAdapter;
+import com.anju.yyk.main.entity.PhotoEntity;
 import com.anju.yyk.main.entity.RecordInfoEntity;
 import com.anju.yyk.main.ui.act.recorddetail.IRecordDetailContract.IRecordDetailView;
 
@@ -60,10 +64,18 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
 
+    @BindView(R2.id.tv_room_content)
+    TextView mContentTv;
+
+    @BindView(R2.id.photo_recyclerView)
+    RecyclerView mPhotoRecyclerView;
+
     @Autowired(name = RouterKey.RECORD_DETAIL_TAG)
     public RecordInfoEntity mInfoEntity;
 
     private CheckRoomDetailAdapter mAdapter;
+    private TakePhotoAdapter mPhotoAdapter;
+    private List<PhotoEntity> photos = new ArrayList<>();
     private List<CheckRoomDetailResponse.ListBean> mList = new ArrayList<>();
 
     @Override
@@ -95,8 +107,8 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
             mNameTv.setText(mInfoEntity.getName());
             mNumberBed.setText(mInfoEntity.getBedId() + "床");
             mCareTypeTv.setText(mInfoEntity.getCareType());
+            mPresenter.checkRoomDetail(mInfoEntity.getId());
         }
-        mPresenter.checkRoomDetail(mInfoEntity.getId());
     }
 
     @Override
@@ -119,6 +131,18 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
 
         mAdapter = new CheckRoomDetailAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
+
+        mPhotoRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mPhotoRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        GridLayoutManager manager = new GridLayoutManager(mActivity, 3);
+        mPhotoRecyclerView.setLayoutManager(manager);
+        mPhotoRecyclerView.addItemDecoration(new SpacesItemDecoration(0
+                , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
+
+        mPhotoAdapter = new TakePhotoAdapter(photos);
+        mPhotoAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
+        mPhotoRecyclerView.setAdapter(mPhotoAdapter);
+        mPhotoRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
@@ -127,6 +151,7 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
         mAgeTv.setText(response.getNianling() + "岁");
         mNumberBed.setText(response.getChuangwei() + "床");
         mCareTypeTv.setText(response.getHulijibie());
+        mContentTv.setText(response.getBeizhu());
         if ("女".equals(response.getSex())) {
             mSexIv.setImageResource(R.mipmap.home_ic_famale);
         } else {
@@ -139,6 +164,18 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
             mList.clear();
             mList.addAll(listBeans);
             mAdapter.notifyDataSetChanged();
+        }
+
+        List<CheckRoomDetailResponse.Photo> photoList = response.getTupian();
+        if (photoList != null && photoList.size() > 0) {
+            for (CheckRoomDetailResponse.Photo photo : photoList) {
+                PhotoEntity photoEntity = new PhotoEntity(PhotoEntity.NORMAL_TYPE);
+                photoEntity.setPhotoPath(photo.getLujing());
+                photoEntity.setSpanSize(1);
+                photos.add(photoEntity);
+            }
+            mPhotoAdapter.notifyDataSetChanged();
+            mPhotoRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 

@@ -93,28 +93,51 @@
             android:paddingEnd="@dimen/common_space_20"
             android:text="@string/home_checkroom_record_title" />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_divder_height"
-        android:background="@color/common_white"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_divder_height"
+                android:background="@color/common_white"/>
 
-    <TextView
-        android:id="@+id/home_textview9"
-        style="@style/common_text_content_default"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        android:text="巡查记录" />
+            <TextView
+                android:id="@+id/home_textview9"
+                style="@style/common_text_content_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="巡查记录" />
 
-    <TextView
-        android:id="@+id/tv_accident_content"
-        style="@style/common_text_content_default"
-        android:padding="@dimen/dp_10"
-        android:background="@color/common_white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_room_content"
+                style="@style/common_text_content_default"
+                android:padding="@dimen/dp_10"
+                android:background="@color/common_white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/home_textview"
+                style="@style/common_text_content_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="照片" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photo_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:background="@color/common_white"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

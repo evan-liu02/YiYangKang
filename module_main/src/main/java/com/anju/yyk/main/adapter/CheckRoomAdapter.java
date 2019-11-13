@@ -4,6 +4,7 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
     public static final int TOGGLE_TYPE = 2;
 
     private CheckRoomAdapterCallback mCallback;
+    private SparseArray<String> dataArray = new SparseArray<String>();
 
     public CheckRoomAdapter(List<CheckRoomListResponse.ListBean> data){
         super(data);
@@ -55,7 +57,11 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
                     hintResId = R.string.home_checkroom_temperature_hint;
                 }
                 EditText et = helper.getView(R.id.et_input);
-                et.addTextChangedListener(new TextWatcher() {
+                if (et.getTag() != null && et.getTag() instanceof TextWatcher) {
+                    et.removeTextChangedListener((TextWatcher) et.getTag());
+                }
+                et.setText(dataArray.get(helper.getAdapterPosition()));
+                TextWatcher textWatcher = new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -68,11 +74,14 @@ public class CheckRoomAdapter extends BaseMultiItemQuickAdapter<CheckRoomListRes
 
                     @Override
                     public void afterTextChanged(Editable s) {
+                        dataArray.put(helper.getAdapterPosition(), s.toString());
                         if (mCallback != null) {
                             mCallback.textChanged(helper.getAdapterPosition(), s.toString());
                         }
                     }
-                });
+                };
+                et.addTextChangedListener(textWatcher);
+                et.setTag(textWatcher);
                 et.setHint(hintResId);
                 break;
             case SPINNER_TYPE:

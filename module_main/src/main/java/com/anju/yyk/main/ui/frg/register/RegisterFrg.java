@@ -280,17 +280,15 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
                 }
                 imagePath = builder.toString();
             }
-            mPresenter.checkRoomCommit(mAppSP.getUserId(), "", false, mPersonInfo.getId(), itemMap, imagePath);
+            mPresenter.checkRoomCommit(mAppSP.getUserId(), content, false, mPersonInfo.getId(), itemMap, imagePath);
         }
     }
 
     @Override
     public void uploadSuccess(String filePath) {
-        if (filePath != null) {
-            if (filePath.endsWith("jpg")) {
-                if (!imageNameList.contains(filePath)) {
-                    imageNameList.add(filePath);
-                }
+        if (filePath != null && filePath.endsWith("jpg")) {
+            if (!imageNameList.contains(filePath)) {
+                imageNameList.add(filePath);
             }
         }
         uploadFile();

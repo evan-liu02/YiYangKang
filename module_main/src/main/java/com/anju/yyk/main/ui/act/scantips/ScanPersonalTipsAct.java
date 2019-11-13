@@ -105,6 +105,7 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
 
     private String mTipId;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+    private String previousAudioUrl;
 
     @Override
     protected int getLayoutId() {
@@ -237,8 +238,22 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
 
     @Override
     public void clickPlay(ImageView image, String audioUrl) {
-        mPlayIv = image;
-        prepareMediaPlayer(audioUrl);
+        if (audioUrl != null) {
+            if (!audioUrl.equals(previousAudioUrl)) {
+                if (mPlayIv != null) {
+                    mPlayIv.setImageResource(R.mipmap.ic_media_play);
+                }
+                mPlayIv = image;
+                prepareMediaPlayer(audioUrl);
+                previousAudioUrl = audioUrl;
+            } else {
+                if (isPlaying()) {
+                    pausePlay();
+                } else {
+                    startPlay();
+                }
+            }
+        }
     }
 
     @Override
@@ -317,6 +332,12 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
                 //设置文件时长，单位 "分:秒" 格式
                 String total = s / 60 + ":" + s % 60;
                 mDurationTv.setText(total);
+            }
+        });
+
+        mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+            if (mPlayIv != null) {
+                mPlayIv.setImageResource(R.mipmap.ic_media_play);
             }
         });
     }

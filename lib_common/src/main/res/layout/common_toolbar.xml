@@ -31,8 +31,8 @@
 
         <ImageView
             android:id="@+id/common_iv_left"
-            android:layout_width="@dimen/common_small_ic_length"
-            android:layout_height="@dimen/common_small_ic_length"
+            android:layout_width="@dimen/common_img_length_20"
+            android:layout_height="@dimen/common_img_length_20"
             android:layout_marginStart="@dimen/common_space_10"
             android:src="@mipmap/common_back_arrow"
             app:layout_constraintLeft_toLeftOf="parent"

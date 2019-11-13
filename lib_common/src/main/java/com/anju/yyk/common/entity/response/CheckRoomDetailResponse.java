@@ -20,7 +20,10 @@ public class CheckRoomDetailResponse {
     private String chuangwei = "";
     private String hulijibie = "";
     private String nianling = "";
+    private String beizhu;
     private String sex;
+
+    private List<Photo> tupian;
 
     public int getStatus() {
         return status;
@@ -76,6 +79,39 @@ public class CheckRoomDetailResponse {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getBeizhu() {
+        return beizhu;
+    }
+
+    public void setBeizhu(String beizhu) {
+        this.beizhu = beizhu;
+    }
+
+    public List<Photo> getTupian() {
+        return tupian;
+    }
+
+    public void setTupian(List<Photo> tupian) {
+        this.tupian = tupian;
+    }
+
+    public static class Photo implements MultiItemEntity {
+        private String lujing;
+
+        public String getLujing() {
+            return lujing;
+        }
+
+        public void setLujing(String lujing) {
+            this.lujing = lujing;
+        }
+
+        @Override
+        public int getItemType() {
+            return NORMAL_TYPE;
+        }
     }
 
     public static class ListBean implements MultiItemEntity {
