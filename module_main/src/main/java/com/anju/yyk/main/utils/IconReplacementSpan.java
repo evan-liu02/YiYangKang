@@ -15,6 +15,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.anju.yyk.main.R;
+
 public class IconReplacementSpan extends ReplacementSpan {
 
     private Context context;
@@ -46,13 +48,16 @@ public class IconReplacementSpan extends ReplacementSpan {
         this.text = text;
         this.textColorId = textColorId;
         this.textMarginRight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0, displayMetrics);
-        this.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20, displayMetrics);
+//        this.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20, displayMetrics);
+        this.textSize = this.context.getResources().getDimension(R.dimen.sp_14);
 
         // Init background related variable value.
         this.backgroundColorId = backgroundColorId;
-        this.backgroundHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25f, displayMetrics);
+//        this.backgroundHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25f, displayMetrics);
+        this.backgroundHeight = this.context.getResources().getDimension(R.dimen.dp_20);
         this.backgroundWidth = this.calculateBackgroundWidth(text+"", displayMetrics, this.textSize) * 1.4f;
-        this.backgroundRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, displayMetrics);
+//        this.backgroundRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, displayMetrics);
+        this.backgroundRadius = this.context.getResources().getDimension(R.dimen.dp_10);
 
         // Init background paint.
         this.backgroundPaint = new Paint();

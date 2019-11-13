@@ -55,6 +55,7 @@ public class CareDetailResponse {
         private String chuangwei = "";
         private String hulijibie = "";
         private String nianling = "";
+        private String sex;
 
         public String getXiangqing() {
             return xiangqing;
@@ -102,6 +103,14 @@ public class CareDetailResponse {
 
         public void setNianling(String nianling) {
             this.nianling = nianling;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
         }
 
         @Override

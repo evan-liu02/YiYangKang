@@ -148,17 +148,25 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
             mAgeTv.setText(listBeans.get(0).getNianling() + "岁");
             mNumberBed.setText(listBeans.get(0).getChuangwei() + "床");
             mCareTypeTv.setText(listBeans.get(0).getHulijibie());
-            // TODO 未返回照片路径
             mContentTv.setText(listBeans.get(0).getContent());
+            if ("女".equals(listBeans.get(0).getSex())) {
+                mSexIv.setImageResource(R.mipmap.home_ic_famale);
+            } else {
+                mSexIv.setImageResource(R.mipmap.home_ic_male);
+            }
             /*mList.clear();
             mList.addAll(listBeans);
             mAdapter.notifyDataSetChanged();*/
-
-            PhotoEntity photoEntity = new PhotoEntity(PhotoEntity.NORMAL_TYPE);
-            photoEntity.setPhotoPath("http://haohua.zhihuidangjian.com/upload/201911/11/201911111357474052.jpg");
-            photoEntity.setSpanSize(1);
-            photos.add(photoEntity);
-            mAdapter.notifyDataSetChanged();
+            List<AccidentDetailResponse.Photo> photoList = response.getTupian();
+            if (photoList != null && photoList.size() > 0) {
+                for (AccidentDetailResponse.Photo photo : photoList) {
+                    PhotoEntity photoEntity = new PhotoEntity(PhotoEntity.NORMAL_TYPE);
+                    photoEntity.setPhotoPath(photo.getLujing());
+                    photoEntity.setSpanSize(1);
+                    photos.add(photoEntity);
+                }
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

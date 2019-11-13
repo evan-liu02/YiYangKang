@@ -31,7 +31,7 @@ public class RecordDetailAdapter extends BaseMultiItemQuickAdapter<CareDetailRes
         switch (helper.getItemViewType()){
             case CareDetailResponse.NORMAL_TYPE:
                 helper.setText(R.id.tv_event, item.getXiangqing())
-                        .setText(R.id.tv_operater, item.getName())
+                        .setText(R.id.tv_operater, "护理员：" + item.getName())
                         .setText(R.id.tv_time, item.getTime());
                 break;
         }

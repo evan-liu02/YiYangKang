@@ -17,6 +17,7 @@ public class AccidentDetailResponse {
     private int status;
     private String title;
     private List<ListBean> list;
+    private List<Photo> tupian;
 
     public int getStatus() {
         return status;
@@ -42,6 +43,31 @@ public class AccidentDetailResponse {
         this.list = list;
     }
 
+    public List<Photo> getTupian() {
+        return tupian;
+    }
+
+    public void setTupian(List<Photo> tupian) {
+        this.tupian = tupian;
+    }
+
+    public static class Photo implements MultiItemEntity {
+        private String lujing;
+
+        public String getLujing() {
+            return lujing;
+        }
+
+        public void setLujing(String lujing) {
+            this.lujing = lujing;
+        }
+
+        @Override
+        public int getItemType() {
+            return NORMAL_TYPE;
+        }
+    }
+
     public static class ListBean implements MultiItemEntity {
         /**
          * id : 463
@@ -58,6 +84,7 @@ public class AccidentDetailResponse {
         private String chuangwei = "";
         private String hulijibie = "";
         private String nianling = "";
+        private String sex;
 
         public String getId() {
             return id;
@@ -105,6 +132,14 @@ public class AccidentDetailResponse {
 
         public void setNianling(String nianling) {
             this.nianling = nianling;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
         }
 
         @Override

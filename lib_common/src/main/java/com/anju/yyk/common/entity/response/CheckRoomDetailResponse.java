@@ -20,6 +20,7 @@ public class CheckRoomDetailResponse {
     private String chuangwei = "";
     private String hulijibie = "";
     private String nianling = "";
+    private String sex;
 
     public int getStatus() {
         return status;
@@ -69,6 +70,14 @@ public class CheckRoomDetailResponse {
         this.nianling = nianling;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     public static class ListBean implements MultiItemEntity {
         /**
          * id : 12986
@@ -82,6 +91,7 @@ public class CheckRoomDetailResponse {
         private String chuangwei = "";
         private String hulijibie = "";
         private String nianling = "";
+        private String sex;
 
         public String getId() {
             return id;
@@ -129,6 +139,14 @@ public class CheckRoomDetailResponse {
 
         public void setNianling(String nianling) {
             this.nianling = nianling;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
         }
 
         @Override

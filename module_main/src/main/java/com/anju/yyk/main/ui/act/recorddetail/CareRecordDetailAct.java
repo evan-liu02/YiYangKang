@@ -131,12 +131,16 @@ public class CareRecordDetailAct extends BaseMvpActivity<RecordDetailPresenter, 
 
     @Override
     public void careDetailSucc(CareDetailResponse response) {
-        // TODO 返回的护工名称不对
         List<CareDetailResponse.ListBean> listBeans = response.getList();
         if (listBeans != null && listBeans.size() > 0){
             mAgeTv.setText(listBeans.get(0).getNianling() + "岁");
             mNumberBed.setText(listBeans.get(0).getChuangwei() + "床");
             mCareTypeTv.setText(listBeans.get(0).getHulijibie());
+            if ("女".equals(listBeans.get(0).getSex())) {
+                mSexIv.setImageResource(R.mipmap.home_ic_famale);
+            } else {
+                mSexIv.setImageResource(R.mipmap.home_ic_male);
+            }
             mList.clear();
             mList.addAll(listBeans);
             mAdapter.notifyDataSetChanged();

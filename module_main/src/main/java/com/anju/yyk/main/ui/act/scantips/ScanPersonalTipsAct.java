@@ -286,7 +286,7 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
         if (mediaPlayer != null){
             if (!mediaPlayer.isPlaying()){
                 mediaPlayer.start();
-                mPlayIv.setImageResource(R.mipmap.common_ic_pause);
+                mPlayIv.setImageResource(R.mipmap.ic_media_pause);
                 mPlayStatus = 0;
             }
         }
