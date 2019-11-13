@@ -6,6 +6,7 @@ import android.widget.Switch;
 import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.entity.response.PatrolResponse;
 import com.anju.yyk.common.imageloader.ImageLoader;
+import com.anju.yyk.common.widget.ToggleButton;
 import com.anju.yyk.main.R;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 import com.anju.yyk.main.entity.PatrolEntity;
@@ -44,8 +45,12 @@ public class PatrolAdapter extends BaseMultiItemQuickAdapter<PatrolResponse.List
                 break;
             case PatrolResponse.DEVICE_TYPE:
                 helper.setText(R.id.tv_title, item.getTitle());
-                Switch sc = helper.getView(R.id.status_switch);
-                sc.setChecked(item.isRight());
+                ToggleButton toggleButton = helper.getView(R.id.switch_btn);
+                if (item.isRight()) {
+                    toggleButton.setToggleOn();
+                } else {
+                    toggleButton.setToggleOff();
+                }
                 break;
             case PatrolResponse.PATROL_TYPE:
                 helper.setText(R.id.tv_detail, item.getDes());

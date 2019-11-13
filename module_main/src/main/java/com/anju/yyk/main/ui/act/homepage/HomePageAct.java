@@ -45,7 +45,7 @@ public class HomePageAct extends BaseActivity {
 //    private PatrolFrg mPatrolFrg;
     private RecordFrg mRecordFrg;
 
-    private PatrolWebFrg mPatrolWebFrg;
+    private PatrolFrg mPatrolWebFrg;
 
     private Fragment mCurFrg = new Fragment();
 
@@ -133,7 +133,7 @@ public class HomePageAct extends BaseActivity {
     private void prepareFrg(){
         mHomeFrg = new HomeFrg();
 //        mPatrolFrg = new PatrolFrg();
-        mPatrolWebFrg = new PatrolWebFrg();
+        mPatrolWebFrg = new PatrolFrg();
         mRecordFrg = new RecordFrg();
     }
 

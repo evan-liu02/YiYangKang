@@ -1,36 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_bg_gray"
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="设备情况" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        app:fabCustomSize="@dimen/dp_50"
-        app:elevation="6dp"
-        android:clickable="true"
-        app:borderWidth="0dp"
-        android:backgroundTint="@color/light_gray"
-        app:rippleColor="#0097a7"
-        android:layout_marginBottom="@dimen/dp_24"
-        android:layout_marginEnd="@dimen/dp_24"
-        android:src="@mipmap/home_ic_add_photo"
-        app:pressedTranslationZ="12dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="巡查情况" />
+
+        <EditText
+            android:id="@+id/edt_content"
+            style="@style/common_text_small_default"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/common_white"
+            android:gravity="top|left"
+            android:hint="请输入巡查情况"
+            android:inputType="text"
+            android:padding="@dimen/dp_10" />
+
+        <TextView
+            style="@style/common_text_content_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="添加照片" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/common_white"
+            android:padding="@dimen/dp_10" />
+
+        <Button
+            android:id="@+id/btn_commit"
+            style="@style/common_text_small_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_43"
+            android:background="@color/common_theme"
+            android:text="提交" />
+    </LinearLayout>
+</ScrollView>
 
