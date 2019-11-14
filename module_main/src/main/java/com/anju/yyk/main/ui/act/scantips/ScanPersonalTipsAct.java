@@ -188,11 +188,14 @@ public class ScanPersonalTipsAct extends BaseMvpActivity<ScanTipsPresenter, Scan
                     tip.setStatus(record.getStatus());
                     tip.setYidurenyuan(record.getYidurenyuan());
                     if (record.getLuyin() != null && record.getLuyin().size() > 0){
+                        List<TipsEntity.LuyinBean> luyinBeans = new ArrayList<>();
                         for (NewTipsListResponse.ListBean.RecordsBean.LuyinBean audio : record.getLuyin()){
                             TipsEntity.LuyinBean luyin = new TipsEntity.LuyinBean();
                             luyin.setLujing(audio.getLujing());
                             tip.addSubItem(luyin);
+                            luyinBeans.add(luyin);
                         }
+                        tip.setLuyin(luyinBeans);
                     }
                     tempList.add(tip);
 //                    mList.add(tip);

@@ -39,6 +39,7 @@
     <color name="common_text_color">#575757</color>
     <color name="common_material_blue_grey_80">#ff37474f</color>
     <color name="common_material_blue_grey_90">#ff263238</color>
+    <color name="common_checkbox">#17BFD4</color>
     <!-- sweet alert end-->
 
 </resources>

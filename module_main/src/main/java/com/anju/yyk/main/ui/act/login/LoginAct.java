@@ -87,7 +87,11 @@ public class LoginAct extends BaseMvpActivity<LoginPresenter, LoginModel> implem
             String account = mAccountEdt.getText().toString().trim();
             String pwd = mPwdEdt.getText().toString().trim();
             if (TextUtils.isEmpty(account) || TextUtils.isEmpty(pwd)){
-                showToast(R.string.home_toast_input_content);
+                if (TextUtils.isEmpty(account)) {
+                    showToast(R.string.home_input_account1);
+                } else {
+                    showToast(R.string.home_input_pwd);
+                }
             }else {
                 mPresenter.login(account, pwd);
             }
@@ -104,5 +108,10 @@ public class LoginAct extends BaseMvpActivity<LoginPresenter, LoginModel> implem
         ARouter.getInstance().build(RouterConstants.ACT_URL_HOME_PAGE)
                 .navigation();
         finish();
+    }
+
+    @Override
+    public void loginFailed() {
+        showToast("用户名或密码错误，请重新输入");
     }
 }

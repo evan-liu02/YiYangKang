@@ -171,7 +171,7 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
                             luyin.setLujing(audio.getLujing());
                             luyinBeans.add(luyin);
                             tip.addSubItem(luyin);
-                            luyinBeans.add(luyin);
+//                            luyinBeans.add(luyin);
                         }
                         tip.setLuyin(luyinBeans);
                     }

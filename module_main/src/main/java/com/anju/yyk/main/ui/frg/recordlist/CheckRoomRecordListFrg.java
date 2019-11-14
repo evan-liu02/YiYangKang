@@ -30,6 +30,7 @@ import com.anju.yyk.main.adapter.RecordAdapter;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 import com.anju.yyk.main.entity.RecordInfoEntity;
 import com.anju.yyk.main.entity.RecordTitleEntity;
+import com.anju.yyk.main.entity.TipsEntity;
 import com.anju.yyk.main.utils.PersonInfoHelper;
 import com.anju.yyk.main.widget.DatePickerDialog;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -38,10 +39,16 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import org.angmarch.views.NiceSpinner;
 import org.angmarch.views.OnSpinnerItemSelectedListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -97,6 +104,8 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
 
     private String selectedName = "所有人";
 
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
     @Override
     public int getLayoutId() {
         return R.layout.home_frg_recordlist;
@@ -108,7 +117,10 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
         if (PersonInfoHelper.personList != null) {
             List<PersonListResponse.ListBean> personList = PersonInfoHelper.personList;
             for (PersonListResponse.ListBean personBean : personList) {
-                dataset.add("[" + +personBean.getChuangwei() + "床" + "]" + personBean.getName());
+                String item = "[" + +personBean.getChuangwei() + "床" + "]" + personBean.getName();
+                if (!dataset.contains(item)) {
+                    dataset.add(item);
+                }
             }
         }
         mManTypeNS.attachDataSource(dataset);
@@ -230,6 +242,7 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
                         info.setLaoren(record.getId());
                         info.setName(record.getName());
                         info.setId(record.getId());
+                        info.setShijian(record.getShijian());
                         if ("所有人".equals(selectedName) || selectedName.equals(record.getName())) {
                             title.addSubItem(info);
                         }
@@ -237,6 +250,28 @@ public class CheckRoomRecordListFrg extends BaseMvpFragment<RecordPresenter, Rec
                 }
                 if (title.getSubItems() != null && title.getSubItems().size() > 0) {
                     mRecordInfoList.add(title);
+                    Collections.sort(title.getSubItems(), new Comparator<RecordInfoEntity>() {
+
+                        @Override
+                        public int compare(RecordInfoEntity recordInfoEntity, RecordInfoEntity t1) {
+                            String dateStr1 = recordInfoEntity.getShijian();
+                            String dateStr2 = t1.getShijian();
+                            try {
+                                long time1 = Objects.requireNonNull(dateFormat.parse(dateStr1)).getTime();
+                                long time2 = Objects.requireNonNull(dateFormat.parse(dateStr2)).getTime();
+                                if (time1 > time2) {
+                                    return -1;
+                                } else if (time1 < time2) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            return 0;
+                        }
+                    });
                 }
             }
             mAdapter.notifyDataSetChanged();

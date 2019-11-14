@@ -102,7 +102,10 @@ public class CareRecordListFrg extends BaseMvpFragment<RecordPresenter, RecordLi
         if (PersonInfoHelper.personList != null) {
             List<PersonListResponse.ListBean> personList = PersonInfoHelper.personList;
             for (PersonListResponse.ListBean personBean : personList) {
-                dataset.add("[" + +personBean.getChuangwei() + "床" + "]" + personBean.getName());
+                String item = "[" + +personBean.getChuangwei() + "床" + "]" + personBean.getName();
+                if (!dataset.contains(item)) {
+                    dataset.add(item);
+                }
             }
         }
         initRecyclerView();
@@ -213,7 +216,7 @@ public class CareRecordListFrg extends BaseMvpFragment<RecordPresenter, RecordLi
                         info.setBedId(record.getBedid());
                         info.setLaoren(record.getLaoren());
                         info.setName(record.getName());
-                        info.setShijian(bean.getDate());
+                        info.setShijian(record.getShijian());
                         if ("所有人".equals(selectedName) || selectedName.equals(record.getName())) {
                             title.addSubItem(info);
                         }

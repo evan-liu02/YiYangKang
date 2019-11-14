@@ -50,6 +50,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 RecordInfoEntity infoEntity = (RecordInfoEntity) item;
                 helper.setText(R.id.tv_name, infoEntity.getName())
                         .setText(R.id.tv_bed_number, infoEntity.getBedId() + "床")
+                        .setText(R.id.tv_time, infoEntity.getShijian())
                         .addOnClickListener(R.id.tv_scan_detail);
                 break;
         }

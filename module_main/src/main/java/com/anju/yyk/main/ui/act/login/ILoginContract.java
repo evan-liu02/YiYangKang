@@ -24,6 +24,7 @@ public interface ILoginContract {
          * 登录成功
          */
         void loginSucc();
+        void loginFailed();
     }
 
     abstract class LoginPresenter extends BasePresenter<ILoginModel, ILoginView>{

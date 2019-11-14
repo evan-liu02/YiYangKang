@@ -44,7 +44,8 @@ public class LoginPresenter extends ILoginContract.LoginPresenter{
                         mAppSP.setUserId(s.getUser_id());
                         getView().loginSucc();
                     }else {
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
+                        getView().loginFailed();
                     }
                 }, throwable -> {
                     getView().hideLoading();
