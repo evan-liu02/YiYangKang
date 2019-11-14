@@ -436,7 +436,10 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
 
     @Override
     public void addAccidentSuccess() {
-
+        showToast("登记成功");
+        if (mActivity != null) {
+            mActivity.finish();
+        }
     }
 
     @Override

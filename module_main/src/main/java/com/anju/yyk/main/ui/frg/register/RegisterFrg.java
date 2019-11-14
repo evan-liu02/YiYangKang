@@ -261,6 +261,10 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
 
     @Override
     public void checkRoomCommitSucc() {
+        showToast("登记成功");
+        if (mActivity != null) {
+            mActivity.finish();
+        }
     }
 
     private void uploadFile() {
@@ -345,7 +349,19 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
             if (imagePathList.size() > 0) {
                 uploadFile();
             } else {
-                mPresenter.checkRoomCommit(mAppSP.getUserId(), "", false, mPersonInfo.getId(), itemMap, "");
+                String imagePath = "";
+                if (imageNameList.size() > 0) {
+                    StringBuilder builder = new StringBuilder();
+                    int imageSize = imageNameList.size();
+                    for (int i = 0; i < imageSize; i++) {
+                        builder.append(imageNameList.get(i));
+                        if (i < imageSize - 1) {
+                            builder.append(",");
+                        }
+                    }
+                    imagePath = builder.toString();
+                }
+                mPresenter.checkRoomCommit(mAppSP.getUserId(), content, false, mPersonInfo.getId(), itemMap, imagePath);
             }
         }
     }

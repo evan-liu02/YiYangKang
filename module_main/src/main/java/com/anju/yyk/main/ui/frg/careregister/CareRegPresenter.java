@@ -52,7 +52,7 @@ public class CareRegPresenter extends ICareRegContract.ICareRegPresenter{
                     if (s.getStatus() == 0){
                         getView().getHuli1Succ(s);
                     }else {
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
                     }
                 }, throwable -> {
                     getView().hideLoading();

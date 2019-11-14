@@ -23,6 +23,7 @@ public class PatrolAdapter extends BaseMultiItemQuickAdapter<PatrolResponse.List
 
     @Inject
     ImageLoader mImageLoader;
+    private PatrolAdapterCallback mCallback;
 
     public PatrolAdapter(List<PatrolResponse.ListBean> data){
         super(data);
@@ -46,6 +47,14 @@ public class PatrolAdapter extends BaseMultiItemQuickAdapter<PatrolResponse.List
             case PatrolResponse.DEVICE_TYPE:
                 helper.setText(R.id.tv_title, item.getTitle());
                 ToggleButton toggleButton = helper.getView(R.id.switch_btn);
+                toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+                    @Override
+                    public void onToggle(boolean on) {
+                        if(mCallback != null) {
+                            mCallback.toggle(helper.getAdapterPosition(), on);
+                        }
+                    }
+                });
                 if (item.isRight()) {
                     toggleButton.setToggleOn();
                 } else {
@@ -63,5 +72,13 @@ public class PatrolAdapter extends BaseMultiItemQuickAdapter<PatrolResponse.List
                 mImageLoader.loadImgByUrl(item.getPhotoPath(), photo);
                 break;
         }
+    }
+
+    public void setAdapterCallBack(PatrolAdapterCallback callback){
+        this.mCallback = callback;
+    }
+
+    public interface PatrolAdapterCallback {
+        void toggle(int position, boolean isCheck);
     }
 }

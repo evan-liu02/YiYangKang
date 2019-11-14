@@ -1,6 +1,7 @@
 package com.anju.yyk.main.ui.frg.patrol;
 
 import com.anju.yyk.common.base.BaseApplication;
+import com.anju.yyk.common.base.BaseResponse;
 import com.anju.yyk.common.entity.response.AccidentDetailResponse;
 import com.anju.yyk.common.entity.response.PatrolResponse;
 import com.anju.yyk.common.entity.response.UploadImageResponse;
@@ -8,6 +9,7 @@ import com.anju.yyk.common.utils.klog.KLog;
 import com.anju.yyk.main.di.component.DaggerMainComponent;
 
 import java.io.File;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -65,6 +67,30 @@ public class PatrolPresenter extends IPatrolContract.PatrolPresenter{
                     getView().hideLoading();
                     getView().showToast(handleThrowableInP(throwable).message);
                     getView().uploadFailed(filePath);
+                });
+        addDisposable(disposable);
+    }
+
+    @Override
+    public void patrolCommit(String hugong_id, String txtContent, Map<String, Integer> map, String imagePath) {
+        if (getView() == null)
+            return;
+
+        getView().showLoading(true);
+
+        Observable<BaseResponse> observable = mModel.patrolCommit(hugong_id, txtContent, map, imagePath);
+        Disposable disposable = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    getView().hideLoading();
+                    if (s.getStatus() == 0) {
+                        getView().patrolCommitSucc();
+                    } else {
+                        getView().showToast(s.getTitle());
+                    }
+                }, throwable -> {
+                    getView().hideLoading();
+                    getView().showToast(handleThrowableInP(throwable).message);
                 });
         addDisposable(disposable);
     }

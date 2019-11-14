@@ -331,6 +331,11 @@ public interface ApiService {
     @POST(ApiAddr.PATH)
     Observable<PatrolResponse> patrol(@Query("action") String action);
 
+
+    @POST(ApiAddr.PATH)
+    Observable<BaseResponse> patrolCommit(@Query("action") String action, @Query("hugong_id") String hugong_id
+            , @Query("txtContent") String txtContent, @QueryMap Map<String, Integer> map, @Query("image_path") String image_path);
+
     /**
      * 上传音频
      * @param des

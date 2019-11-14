@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anju.yyk.common.app.Constants;
+import com.anju.yyk.common.app.sp.AppSP;
 import com.anju.yyk.common.base.BaseMvpFragment;
 import com.anju.yyk.common.entity.response.PatrolResponse;
 import com.anju.yyk.common.entity.response.PersonListResponse;
@@ -37,7 +38,6 @@ import com.anju.yyk.main.R;
 import com.anju.yyk.main.R2;
 import com.anju.yyk.main.adapter.PatrolAdapter;
 import com.anju.yyk.main.adapter.TakePhotoAdapter;
-import com.anju.yyk.main.di.component.DaggerMainComponent;
 import com.anju.yyk.main.entity.PhotoEntity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -68,7 +68,7 @@ import io.reactivex.functions.Consumer;
  *
  * @modify:
  */
-public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> implements IPatrolContract.IPatrolView{
+public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> implements IPatrolContract.IPatrolView, PatrolAdapter.PatrolAdapterCallback {
 
     /** 打开相机*/
     private final int GET_IMAGE_VIA_CAMERA_BEFORE = 210;
@@ -96,7 +96,7 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
 
     private ImageCompress mImageCompress;
     private PersonListResponse.ListBean mPersonInfo;
-    private HashMap<String, String> itemMap = new HashMap<String, String>();
+    private HashMap<String, Integer> itemMap = new HashMap<String, Integer>();
     private List<PhotoEntity> photos = new ArrayList<>();
     private Bitmap photo;
     private File file;
@@ -107,6 +107,8 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
     private List<String> failedImageList = new ArrayList<String>(); // 存放上传失败的图片路径
     private String content;
 
+    AppSP mAppSP;
+
     @Override
     public int getLayoutId() {
         return R.layout.home_frg_patrol;
@@ -114,9 +116,10 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
 
     @Override
     public void init() {
-        mDevicesTitle = getResources().getStringArray(R.array.home_devices_title);
+//        mDevicesTitle = getResources().getStringArray(R.array.home_devices_title);
 //        prepareData();
         mImageCompress = new ImageCompress();
+        mAppSP = new AppSP(mActivity);
         initRecyclerView();
     }
 
@@ -201,6 +204,7 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
         mAdapter = new PatrolAdapter(mPatrols);
+        mAdapter.setAdapterCallBack(this);
         mAdapter.setSpanSizeLookup((gridLayoutManager, position) -> mPatrols.get(position).getSpanSize());
         mRecyclerView.setAdapter(mAdapter);
 
@@ -226,6 +230,9 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
             for (PatrolResponse.ListBean bean : listBeans){
                 bean.setSpanSize(3);
                 bean.setmItemType(PatrolResponse.DEVICE_TYPE);
+                if ("2".equals(bean.getLeixing())) {
+                    itemMap.put(bean.getLieming(), 1);
+                }
                 mPatrols.add(bean);
             }
         }
@@ -250,7 +257,7 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
                 }
                 imagePath = builder.toString();
             }
-//            mPresenter.checkRoomCommit(mAppSP.getUserId(), content, false, mPersonInfo.getId(), itemMap, imagePath);
+            mPresenter.patrolCommit(mAppSP.getUserId(), content, itemMap, imagePath);
         }
     }
 
@@ -272,6 +279,20 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
         uploadFile();
     }
 
+    @Override
+    public void patrolCommitSucc() {
+        showToast("添加成功");
+    }
+
+    @Override
+    public void toggle(int position, boolean isCheck) {
+        if (position < mPatrols.size()) {
+            mPatrols.get(position).setRight(isCheck);
+            String key = mPatrols.get(position).getLieming();
+            itemMap.put(key, isCheck ? 1 : 0);
+        }
+    }
+
     @OnClick({R2.id.btn_commit})
     public void onViewClicked(View view){
         if (view.getId() == R.id.btn_commit) {
@@ -283,7 +304,19 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
             if (imagePathList.size() > 0) {
                 uploadFile();
             } else {
-//                mPresenter.checkRoomCommit(mAppSP.getUserId(), "", false, mPersonInfo.getId(), itemMap, "");
+                String imagePath = "";
+                if (imageNameList.size() > 0) {
+                    StringBuilder builder = new StringBuilder();
+                    int imageSize = imageNameList.size();
+                    for (int i = 0; i < imageSize; i++) {
+                        builder.append(imageNameList.get(i));
+                        if (i < imageSize - 1) {
+                            builder.append(",");
+                        }
+                    }
+                    imagePath = builder.toString();
+                }
+                mPresenter.patrolCommit(mAppSP.getUserId(), content, itemMap, imagePath);
             }
         }
     }

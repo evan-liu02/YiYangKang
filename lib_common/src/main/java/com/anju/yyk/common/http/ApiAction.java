@@ -51,6 +51,7 @@ public class ApiAction {
     public static final String ACCIDENT_DETAIL_ACTION = "shigu_show";
     /** 安全巡查项目*/
     public static final String PATROL_ACTION = "anquan";
+    public static final String PATROL_ADD_ACTION = "anquan_add";
 
     /** 添加提醒*/
     public static final String ADD_TIP_ACTION = "zhuyiadd";
