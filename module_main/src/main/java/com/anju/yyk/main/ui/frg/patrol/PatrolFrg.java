@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import butterknife.BindView;
@@ -282,6 +283,26 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
     @Override
     public void patrolCommitSucc() {
         showToast("添加成功");
+
+        for (Map.Entry<String, Integer> entry : itemMap.entrySet()) {
+            entry.setValue(1);
+        }
+        imageNameList.clear();
+        imagePathList.clear();
+        failedImageList.clear();
+        for (PatrolResponse.ListBean bean : mPatrols) {
+            bean.setRight(true);
+        }
+        mAdapter.notifyDataSetChanged();
+        List<PhotoEntity> tempPhotos = new ArrayList<PhotoEntity>();
+        for (PhotoEntity entity : this.photos) {
+            if (entity.getItemType() != PhotoEntity.ADD_TYPE) {
+                tempPhotos.add(entity);
+            }
+        }
+        this.photos.removeAll(tempPhotos);
+        mContentEdt.setText("");
+        mPhotoAdapter.notifyDataSetChanged();
     }
 
     @Override

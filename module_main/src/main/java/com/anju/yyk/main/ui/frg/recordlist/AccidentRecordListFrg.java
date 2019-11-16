@@ -40,8 +40,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -155,6 +157,17 @@ public class AccidentRecordListFrg extends BaseMvpFragment<RecordPresenter, Reco
     protected void initData() {
         Event event = new Event(EventConstant.EventCode.REFRESH_RECORDLIST_FRG);
         EventBusUtil.sendEvent(event);
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        mEndTime = dateFormat.format(date);
+        calendar.add(Calendar.DAY_OF_MONTH, -6);
+        date = calendar.getTime();
+        mStartTime = dateFormat.format(date);
+        mTimeStartTv.setText(mStartTime);
+        mTimeEndTv.setText(mEndTime);
+        mPresenter.getAccident(mAppSP.getUserId(), mStartTime, mEndTime);
     }
 
     @Override

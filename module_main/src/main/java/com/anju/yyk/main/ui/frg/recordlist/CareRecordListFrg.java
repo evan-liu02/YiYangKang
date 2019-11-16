@@ -35,10 +35,18 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import org.angmarch.views.NiceSpinner;
 import org.angmarch.views.OnSpinnerItemSelectedListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -90,6 +98,8 @@ public class CareRecordListFrg extends BaseMvpFragment<RecordPresenter, RecordLi
     private String mStartTime = "";
     private String mEndTime = "";
     private String selectedName = "所有人";
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     @Override
     public int getLayoutId() {
@@ -144,6 +154,17 @@ public class CareRecordListFrg extends BaseMvpFragment<RecordPresenter, RecordLi
     protected void initData() {
         Event event = new Event(EventConstant.EventCode.REFRESH_RECORDLIST_FRG);
         EventBusUtil.sendEvent(event);
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        mEndTime = dateFormat.format(date);
+        calendar.add(Calendar.DAY_OF_MONTH, -6);
+        date = calendar.getTime();
+        mStartTime = dateFormat.format(date);
+        mTimeStartTv.setText(mStartTime);
+        mTimeEndTv.setText(mEndTime);
+        mPresenter.getCareRecord("0", mStartTime, mEndTime);
     }
 
     @Override
@@ -224,6 +245,28 @@ public class CareRecordListFrg extends BaseMvpFragment<RecordPresenter, RecordLi
                 }
                 if (title.getSubItems() != null && title.getSubItems().size() > 0) {
                     mRecordInfoList.add(title);
+                    Collections.sort(title.getSubItems(), new Comparator<RecordInfoEntity>() {
+
+                        @Override
+                        public int compare(RecordInfoEntity recordInfoEntity, RecordInfoEntity t1) {
+                            String dateStr1 = recordInfoEntity.getShijian();
+                            String dateStr2 = t1.getShijian();
+                            try {
+                                long time1 = Objects.requireNonNull(dateFormat.parse(dateStr1)).getTime();
+                                long time2 = Objects.requireNonNull(dateFormat.parse(dateStr2)).getTime();
+                                if (time1 > time2) {
+                                    return -1;
+                                } else if (time1 < time2) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            return 0;
+                        }
+                    });
                 }
             }
             mAdapter.notifyDataSetChanged();
