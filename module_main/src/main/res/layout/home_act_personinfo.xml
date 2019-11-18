@@ -83,16 +83,13 @@
             android:paddingEnd="@dimen/dp_7"
             android:paddingTop="@dimen/dp_3"
             android:paddingBottom="@dimen/dp_3"
-            app:layout_constraintLeft_toLeftOf="@id/tv_tag"
-            app:layout_constraintRight_toRightOf="@id/tv_tag"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_name"
             app:layout_constraintBottom_toBottomOf="@+id/tv_name"/>
 
         <TextView
             android:id="@+id/tv_tag"
             style="@style/common_text_content_theme"
-            android:paddingStart="@dimen/common_space_10"
-            android:paddingEnd="@dimen/common_space_10"
             android:paddingTop="@dimen/common_space_3"
             android:paddingBottom="@dimen/common_space_3"
             android:layout_marginTop="@dimen/common_space_15"

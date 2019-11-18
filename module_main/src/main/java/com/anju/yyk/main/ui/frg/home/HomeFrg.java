@@ -75,7 +75,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
     @BindView(R2.id.fl_ptr)
     PtrFrameLayout mPtrFl;
 
-    @BindView(R2.id.tv_top)
+    @BindView(R2.id.tv_top_count)
     TextView mTopTv;
 
     private BedListAdapter mAdapter;
@@ -158,7 +158,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
 
     @Override
     public void getAttentionCountSucc(AttentionCountResponse response) {
-        String str = "有新注意事项" + response.getCount() + "条";
+        /*String str = "有新注意事项" + response.getCount() + "条";
         SpannableString spannableStr = new SpannableString(str);
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(str);
@@ -168,7 +168,8 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
             IconReplacementSpan hSpan = new IconReplacementSpan(getContext(), Color.RED, Color.WHITE, matcher.group(0));
             spannableStr.setSpan(hSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             mTopTv.setText(spannableStr);
-        }
+        }*/
+        mTopTv.setText(response.getCount());
         mPtrFl.autoRefresh();
     }
 
@@ -298,9 +299,9 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R2.id.tv_top})
+    @OnClick({R2.id.tv_top_layout})
     public void onViewClicked(View v){
-        if (v.getId() == R.id.tv_top){
+        if (v.getId() == R.id.tv_top_layout){
             ARouter.getInstance().build(RouterConstants.ACT_URL_SCAN_TIPS)
                     .navigation();
         }

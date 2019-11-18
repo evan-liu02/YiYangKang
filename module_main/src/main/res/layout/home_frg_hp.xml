@@ -31,24 +31,47 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_top"
-            style="@style/common_text_large_white"
+        <LinearLayout
+            android:id="@+id/tv_top_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/common_space_10"
+            android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@id/view_top"
             app:layout_constraintLeft_toLeftOf="@+id/view_top"
-            app:layout_constraintRight_toRightOf="@+id/view_top"
-            app:layout_constraintTop_toTopOf="@id/view_top"
-            tools:text="有新注意事项50条" />
+            app:layout_constraintRight_toRightOf="@id/view_top"
+            app:layout_constraintTop_toTopOf="@id/view_top">
+
+            <TextView
+                style="@style/common_text_large_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="有新注意事项" />
+
+            <TextView
+                android:id="@+id/tv_top_count"
+                style="@style/common_text_large_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_count_bg"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="0" />
+
+            <TextView
+                style="@style/common_text_large_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="条" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@mipmap/home_ic_tip"
-            app:layout_constraintRight_toLeftOf="@+id/tv_top"
+            app:layout_constraintRight_toLeftOf="@id/tv_top_layout"
             app:layout_constraintTop_toTopOf="@+id/view_top"
             app:layout_constraintBottom_toBottomOf="@+id/view_top"/>
 
