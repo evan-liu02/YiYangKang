@@ -57,6 +57,7 @@
                 android:background="@drawable/home_count_bg"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+                android:textSize="@dimen/sp_15"
                 android:text="0" />
 
             <TextView

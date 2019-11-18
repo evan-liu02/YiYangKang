@@ -102,13 +102,39 @@
 
         <ImageView
             android:id="@+id/iv_read_status"
-            android:layout_width="@dimen/dp_72"
-            android:layout_height="@dimen/dp_32"
+            android:layout_width="@dimen/dp_74"
+            android:layout_height="@dimen/dp_34"
             android:layout_marginEnd="@dimen/dp_13"
             android:src="@mipmap/home_ic_unread"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_unread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_6"
+            android:text="未读"
+            android:visibility="gone"
+            android:textColor="@color/common_white"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintBottom_toBottomOf="@id/iv_read_status"
+            app:layout_constraintRight_toRightOf="@id/iv_read_status"
+            app:layout_constraintTop_toTopOf="@id/iv_read_status" />
+
+        <TextView
+            android:id="@+id/tv_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:text="已读"
+            android:visibility="gone"
+            android:textColor="@color/common_white"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintBottom_toBottomOf="@id/iv_read_status"
+            app:layout_constraintLeft_toLeftOf="@id/iv_read_status"
+            app:layout_constraintTop_toTopOf="@id/iv_read_status" />
 
         <TextView
             android:id="@+id/tv_play"

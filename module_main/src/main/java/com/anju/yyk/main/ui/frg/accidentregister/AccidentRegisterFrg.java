@@ -2,9 +2,11 @@ package com.anju.yyk.main.ui.frg.accidentregister;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
@@ -16,6 +18,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -97,9 +100,10 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
     private final int GET_IMAGE_VIA_CAMERA_BEFORE = 210;
 
     /** 照片生成完毕，通知刷新列表*/
-    private final int CREATED_PHOTO_COMPELETE = 1011;
+    private final int CREATED_PHOTO_COMPLETE = 1011;
     /** 准备照片数据*/
     private final int PREPARE_PHOTO_DATA = 1012;
+    private final int ALBUM_RESULT_CODE = 1013;
 
     private static final int MAX_VOICE_TIME = 60;
     private static final String AUDIO_DIR_NAME = "yyk_audio";
@@ -122,6 +126,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
     private List<String> failedImageList = new ArrayList<String>(); // 存放上传失败的图片路径
     private String content;
     private String audioPath; // 服务器返回的音频路径
+    private int btnType = -1;
 
     @Override
     public int getLayoutId() {
@@ -164,8 +169,23 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(Permission permission) throws Exception {
+                        if (btnType == 1) {
+                            if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                openGallery();
+                            }
+                        } else if (btnType == 2) {
+                            if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    && hasPermission(Manifest.permission.CAMERA)) {
+                                openCamera();
+                            }
+                        } else if (btnType == 3) {
+                            if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    && hasPermission(Manifest.permission.RECORD_AUDIO)) {
+                                startRecord();
+                            }
+                        }
                         if (permission.granted) {
-                            if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission.name)
+                            /*if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission.name)
                                     && hasPermission(Manifest.permission.CAMERA)) {
                                 openCamera();
                             }
@@ -175,7 +195,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                             }
                             if (Manifest.permission.RECORD_AUDIO.equals(permission.name)) {
                                 startRecord();
-                            }
+                            }*/
                             // 用户已经同意该权限
                         } else if (permission.shouldShowRequestPermissionRationale) {
                             // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时。还会提示请求权限的对话框
@@ -193,16 +213,62 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PhotoEntity entity = photos.get(position);
                 if (entity.getItemType() == PhotoEntity.ADD_TYPE){
-                    if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    showChooseDialog();
+                    /*if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     } else if (!hasPermission(Manifest.permission.CAMERA)) {
                         requestPermissions(Manifest.permission.CAMERA);
                     } else {
                         openCamera();
-                    }
+                    }*/
                 }
             }
         });
+    }
+
+    private void openGallery() {
+        if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else {
+            Intent albumIntent = new Intent(Intent.ACTION_PICK);
+            albumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            startActivityForResult(albumIntent, ALBUM_RESULT_CODE);
+        }
+    }
+
+    private void showChooseDialog() {
+        if (mActivity == null) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.home_dialog, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        Button chooseBtn = view.findViewById(R.id.choose_btn);
+        Button cameraBtn = view.findViewById(R.id.camera_btn);
+        chooseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                btnType = 1;
+                openGallery();
+            }
+        });
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                btnType = 2;
+                if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                } else if (!hasPermission(Manifest.permission.CAMERA)) {
+                    requestPermissions(Manifest.permission.CAMERA);
+                } else {
+                    openCamera();
+                }
+            }
+        });
+        dialog.show();
     }
 
     private void initRecyclerView(){
@@ -302,7 +368,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
             switch(msg.what){
                 case PREPARE_PHOTO_DATA:
                     break;
-                case CREATED_PHOTO_COMPELETE:
+                case CREATED_PHOTO_COMPLETE:
                     BitmapFactory.Options option = new BitmapFactory.Options();
                     option.inSampleSize = 2;
                     photo = BitmapFactory.decodeFile(file.getPath(), option);
@@ -333,7 +399,9 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                                 showToast(R.string.error_photo_bitmap_isnull);
                             }
                         }
-                        file.delete();
+                        if (btnType == 2) {
+                            file.delete();
+                        }
                     }
                     hideLoading();
                     break;
@@ -349,7 +417,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 if (file != null && file.exists()) {
                     showLoading(true);
                     if (file.length() > 0){
-                        handler.sendEmptyMessage(CREATED_PHOTO_COMPELETE);
+                        handler.sendEmptyMessage(CREATED_PHOTO_COMPLETE);
                     }else {
                         new Thread(new Runnable() {
                             boolean flag = true;
@@ -358,7 +426,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                                 while(flag){
                                     if (file.length() > 0){
                                         flag = false;
-                                        handler.sendEmptyMessage(CREATED_PHOTO_COMPELETE);
+                                        handler.sendEmptyMessage(CREATED_PHOTO_COMPLETE);
                                         break;
                                     }
                                     try {
@@ -374,6 +442,31 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 }
             }else if (resultCode == Activity.RESULT_CANCELED){
                 showToast(R.string.toast_cancel_take_photo);
+            }
+        } else if (requestCode == ALBUM_RESULT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null && data.getData() != null) {
+                    Cursor cursor = null;
+                    try {
+                        String[] pro = {MediaStore.Images.Media.DATA};
+                        cursor = mActivity.getContentResolver().query(data.getData(), pro, null, null, null);
+                        if (cursor == null) {
+                            return;
+                        }
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        String path = cursor.getString(column_index);
+                        file = new File(path);
+                        if (file.exists() && file.length() > 0) {
+                            handler.sendEmptyMessage(CREATED_PHOTO_COMPLETE);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (cursor != null)
+                            cursor.close();
+                    }
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -464,6 +557,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
         if (v.getId() == R.id.btn_record){
             if(!isStart){
                 startRecord();
+                btnType = 3;
 //                mRecordBtn.setText("停止录音");
 //                isStart = true;
             }else{
