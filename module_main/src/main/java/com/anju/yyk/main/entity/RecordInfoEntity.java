@@ -19,6 +19,7 @@ public class RecordInfoEntity implements MultiItemEntity, Serializable {
     private String id;
     private String chuangwei;
     private String shijian;
+    private String date;
 
     public boolean isFiexTop() {
         return isFiexTop;
@@ -106,6 +107,14 @@ public class RecordInfoEntity implements MultiItemEntity, Serializable {
 
     public void setShijian(String shijian) {
         this.shijian = shijian;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override

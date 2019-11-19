@@ -238,6 +238,7 @@ public class CareRecordListFrg extends BaseMvpFragment<RecordPresenter, RecordLi
                         info.setLaoren(record.getLaoren());
                         info.setName(record.getName());
                         info.setShijian(record.getShijian());
+                        info.setDate(bean.getDate());
                         if ("所有人".equals(selectedName) || selectedName.equals(record.getName())) {
                             title.addSubItem(info);
                         }

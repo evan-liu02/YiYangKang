@@ -97,8 +97,8 @@ public class CareRecordDetailAct extends BaseMvpActivity<RecordDetailPresenter, 
             mNameTv.setText(mInfoEntity.getName());
             mNumberBed.setText(mInfoEntity.getBedId() + "床");
             mCareTypeTv.setText(mInfoEntity.getCareType());
+            mPresenter.careDetail(mInfoEntity.getLaoren(), mInfoEntity.getDate());
         }
-        mPresenter.careDetail(mInfoEntity.getLaoren(), mInfoEntity.getShijian());
     }
 
     @Override
