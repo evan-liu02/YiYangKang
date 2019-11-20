@@ -86,6 +86,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
     AppSP mAppSP;
 
     private AddTipDialog mAddTipDialog;
+    private boolean isRefresh;
 
     /** 录音*/
 //    private final int RECORD_AUDIO_REQUESTCODE = 1103;
@@ -106,7 +107,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
 
     @Override
     protected void initData() {
-        mPresenter.getAttentionCount();
+        mPresenter.getAttentionCount(true);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
 
     @Override
     protected boolean isRegisterEventBus() {
-        return false;
+        return true;
     }
 
     private void initRecyclerView(){
@@ -170,7 +171,9 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
             mTopTv.setText(spannableStr);
         }*/
         mTopTv.setText(response.getCount());
-        mPtrFl.autoRefresh();
+        if (!isRefresh) {
+            mPtrFl.autoRefresh();
+        }
     }
 
     @Override
@@ -218,6 +221,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         mDedInfoList.add(entity5);
 
         mAdapter.notifyDataSetChanged();
+        mPtrFl.autoRefresh();
 
         Event event = new Event(EventConstant.EventCode.REFRESH_PAGE);
         EventBusUtil.sendEvent(event);
@@ -225,7 +229,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
 
     @Override
     public void changeTopStatusSucc() {
-        mPresenter.getAttentionCount();
+        mPresenter.getAttentionCount(true);
     }
 
     @Override
@@ -304,6 +308,20 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         if (v.getId() == R.id.tv_top_layout){
             ARouter.getInstance().build(RouterConstants.ACT_URL_SCAN_TIPS)
                     .navigation();
+        }
+    }
+
+    @Override
+    public void onEventBusCome(Event event) {
+        if (event != null) {
+            switch (event.getCode()) {
+                case EventConstant.EventCode.REFRESH_HOME_TIPS:
+                    isRefresh = true;
+                    mPresenter.getAttentionCount(false);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

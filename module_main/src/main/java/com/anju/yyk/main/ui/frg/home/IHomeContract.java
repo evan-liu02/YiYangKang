@@ -41,7 +41,7 @@ public interface IHomeContract {
 
     abstract class HomePresenter extends BasePresenter<IHomeModel, IHomeView>{
 
-        public abstract void getAttentionCount();
+        public abstract void getAttentionCount(boolean showLoading);
 
         public abstract void getPersonTop();
 

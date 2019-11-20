@@ -51,7 +51,7 @@ public class ScanTipsPresenter extends IScanTipsContract.ScanTipsPresenter{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
                     getView().hideLoading();
-                    KLog.d("返回-------->" + s.getList().size());
+//                    KLog.d("返回-------->" + s.getList().size());
                     if (s.getStatus() == 0){
                         getView().getPersonalTipsSucc(s.getList());
                     }else {

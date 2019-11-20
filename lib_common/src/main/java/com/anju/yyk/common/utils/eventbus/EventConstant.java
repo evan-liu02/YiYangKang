@@ -19,5 +19,6 @@ public final class EventConstant {
         public static final int FINISH_PAGE = 0x111112;
         /** 刷新记录页面*/
         public static final int REFRESH_RECORDLIST_FRG = 0x111113;
+        public static final int REFRESH_HOME_TIPS = 0x111114;
     }
 }

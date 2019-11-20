@@ -15,6 +15,7 @@ import com.anju.yyk.common.base.BaseActivity;
 import com.anju.yyk.common.base.BaseApplication;
 import com.anju.yyk.common.utils.SweetAlertUtil;
 import com.anju.yyk.common.utils.eventbus.Event;
+import com.anju.yyk.common.utils.eventbus.EventBusUtil;
 import com.anju.yyk.common.utils.eventbus.EventConstant;
 import com.anju.yyk.common.widget.bottomnavigationviewex.BottomNavigationViewEx;
 import com.anju.yyk.common.widget.sweetalert.SweetAlertDialog;
@@ -26,6 +27,9 @@ import com.anju.yyk.main.ui.frg.patrol.PatrolFrg;
 import com.anju.yyk.main.ui.frg.patrol.PatrolWebFrg;
 import com.anju.yyk.main.ui.frg.record.RecordFrg;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -52,6 +56,15 @@ public class HomePageAct extends BaseActivity {
     @Inject
     AppSP mAppSP;
 
+    private Timer mTimer = new Timer();
+    private TimerTask mTimerTask = new TimerTask() {
+        @Override
+        public void run() {
+            Event event = new Event(EventConstant.EventCode.REFRESH_HOME_TIPS);
+            EventBusUtil.sendEvent(event);
+        }
+    };
+
     @Override
     protected int getLayoutId() {
         return R.layout.home_act_mainpage;
@@ -66,6 +79,8 @@ public class HomePageAct extends BaseActivity {
         mNavigationBar.enableAnimation(false);
         mNavigationBar.enableShiftingMode(false);
         mNavigationBar.enableItemShiftingMode(false);
+
+        mTimer.schedule(mTimerTask, 60000, 60000);
     }
 
     @Override
@@ -159,6 +174,19 @@ public class HomePageAct extends BaseActivity {
         SweetAlertUtil.showConfirmAndCancelAlert(mActivity, getString(R.string.home_dialog_title_exchange)
                 , getString(R.string.home_dialog_content_exchange), getString(R.string.home_dialog_confirm_exchange)
                 , getString(R.string.home_dialog_cancle_exchange), finishOrderConfirmListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimerTask != null) {
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
     }
 
     /**

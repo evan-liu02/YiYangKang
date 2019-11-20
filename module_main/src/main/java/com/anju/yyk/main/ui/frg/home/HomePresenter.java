@@ -24,12 +24,14 @@ public class HomePresenter extends IHomeContract.HomePresenter {
     }
 
     @Override
-    public void getAttentionCount() {
+    public void getAttentionCount(boolean showLoading) {
         if (getView() == null){
             return;
         }
 
-        getView().showLoading(true);
+        if (showLoading) {
+            getView().showLoading(true);
+        }
 
         Observable<AttentionCountResponse> observable = mModel.requestAttentionCount();
         Disposable disposable = observable.subscribeOn(Schedulers.io())
@@ -37,15 +39,19 @@ public class HomePresenter extends IHomeContract.HomePresenter {
                 .subscribe(s -> {
                     if (s.getStatus() == 0){
                         getView().getAttentionCountSucc(s);
-                    }else {
-                        getView().hideLoading();
-                        getView().refreshComplete();
-                        getView().showToast(s.getTitle());
+                    } else {
+                        if (showLoading) {
+                            getView().hideLoading();
+                            getView().refreshComplete();
+                            getView().showToast(s.getTitle());
+                        }
                     }
                 }, throwable -> {
-                    getView().hideLoading();
-                    getView().refreshComplete();
-                    getView().showToast(handleThrowableInP(throwable).message);
+                    if (showLoading) {
+                        getView().hideLoading();
+                        getView().refreshComplete();
+                        getView().showToast(handleThrowableInP(throwable).message);
+                    }
                 });
         addDisposable(disposable);
     }
