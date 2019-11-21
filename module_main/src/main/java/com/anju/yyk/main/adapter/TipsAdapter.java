@@ -69,11 +69,13 @@ public class TipsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                     helper.getView(R.id.tv_read).setVisibility(View.GONE);
                     helper.getView(R.id.tv_unread).setVisibility(View.VISIBLE);
                     helper.setImageResource(R.id.iv_read_status, R.mipmap.home_ic_unread);
-                    helper.getView(R.id.iv_read_status).setOnClickListener(v -> {
+                }
+                helper.getView(R.id.iv_read_status).setOnClickListener(v -> {
+                    if (tipsInfo.getStatus() == 1) {
                         if (mCallback != null)
                             mCallback.clickRead(helper.getAdapterPosition(), tipsInfo.getId());
-                    });
-                }
+                    }
+                });
 
                 if (tipsInfo.getLuyin() != null && tipsInfo.getLuyin().size() > 0){
                     helper.setGone(R.id.tv_play, true);

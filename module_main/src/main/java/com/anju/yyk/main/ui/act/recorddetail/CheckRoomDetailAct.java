@@ -1,6 +1,12 @@
 package com.anju.yyk.main.ui.act.recorddetail;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +24,7 @@ import com.anju.yyk.common.base.BaseMvpActivity;
 import com.anju.yyk.common.entity.response.AccidentDetailResponse;
 import com.anju.yyk.common.entity.response.CareDetailResponse;
 import com.anju.yyk.common.entity.response.CheckRoomDetailResponse;
+import com.anju.yyk.common.imageloader.ImageLoader;
 import com.anju.yyk.common.utils.AppUtil;
 import com.anju.yyk.common.widget.itemdecoration.SpacesItemDecoration;
 import com.anju.yyk.main.R;
@@ -27,6 +34,7 @@ import com.anju.yyk.main.adapter.TakePhotoAdapter;
 import com.anju.yyk.main.entity.PhotoEntity;
 import com.anju.yyk.main.entity.RecordInfoEntity;
 import com.anju.yyk.main.ui.act.recorddetail.IRecordDetailContract.IRecordDetailView;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +85,9 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
     private TakePhotoAdapter mPhotoAdapter;
     private List<PhotoEntity> photos = new ArrayList<>();
     private List<CheckRoomDetailResponse.ListBean> mList = new ArrayList<>();
+    private ImageLoader imageLoader;
+    private int screenWidth;
+    private int screenHeight;
 
     @Override
     protected int getLayoutId() {
@@ -88,11 +99,39 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
         ARouter.getInstance().inject(this);
         setToolbarTopic(R.string.home_checkroom_detail);
         initRecyclerView();
+        imageLoader = new ImageLoader(this);
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
     }
 
     @Override
     public void initListener() {
+        mPhotoAdapter.setOnItemClickListener((adapter, view, position) -> {
+            showPhotoDialog(photos.get(position).getPhotoPath());
+        });
+    }
 
+    private void showPhotoDialog(String path) {
+        final Dialog dialog = new Dialog(this, R.style.home_PhotoDialogTheme);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.home_dialog_photo, null);
+        PhotoView photoView = contentView.findViewById(R.id.photoview);
+        imageLoader.loadImgByUrl(path, photoView);
+        dialog.setContentView(contentView);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.getDecorView().setPadding(0, 0, 0, 0);
+            window.getDecorView().setBackgroundColor(Color.TRANSPARENT);
+            WindowManager.LayoutParams layoutParams = window.getAttributes();
+            layoutParams.width = screenWidth;
+            layoutParams.height = screenHeight;
+            window.setAttributes(layoutParams);
+        }
+        dialog.show();
     }
 
     @Override
@@ -139,7 +178,7 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
         mPhotoRecyclerView.addItemDecoration(new SpacesItemDecoration(0
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
-        mPhotoAdapter = new TakePhotoAdapter(photos);
+        mPhotoAdapter = new TakePhotoAdapter(photos, false);
         mPhotoAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
         mPhotoRecyclerView.setAdapter(mPhotoAdapter);
         mPhotoRecyclerView.setVisibility(View.GONE);

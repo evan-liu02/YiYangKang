@@ -1,5 +1,6 @@
 package com.anju.yyk.main.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.anju.yyk.common.base.BaseApplication;
@@ -18,9 +19,11 @@ public class TakePhotoAdapter extends BaseMultiItemQuickAdapter<PhotoEntity, Bas
 
     @Inject
     ImageLoader mImageLoader;
+    private boolean showBtn;
 
-    public TakePhotoAdapter(List<PhotoEntity> data){
+    public TakePhotoAdapter(List<PhotoEntity> data, boolean showBtn){
         super(data);
+        this.showBtn = showBtn;
         addItemType(PhotoEntity.NORMAL_TYPE, R.layout.home_item_patrol_photo);
         addItemType(PhotoEntity.ADD_TYPE, R.layout.home_item_patrol_add);
         DaggerMainComponent.builder()
@@ -40,9 +43,30 @@ public class TakePhotoAdapter extends BaseMultiItemQuickAdapter<PhotoEntity, Bas
                 } else {
                     mImageLoader.loadImgByLocal(item.getPhotoPath(), imageView);
                 }
+                View deleteBtn = helper.getView(R.id.btn_delete);
+                if (showBtn) {
+                    deleteBtn.setVisibility(View.VISIBLE);
+                }
+                deleteBtn.setOnClickListener(view -> {
+                    getData().remove(item);
+                    if (callback != null) {
+                        callback.photoDelete(helper.getAdapterPosition());
+                    }
+                    notifyDataSetChanged();
+                });
                 break;
             case PhotoEntity.ADD_TYPE:
                 break;
         }
+    }
+
+    private PhotoCallback callback;
+
+    public void setCallback(PhotoCallback callback) {
+        this.callback = callback;
+    }
+
+    public interface PhotoCallback {
+        void photoDelete(int position);
     }
 }

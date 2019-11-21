@@ -191,6 +191,12 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
                 }
             }
         });
+
+        mPhotoAdapter.setCallback(position -> {
+            if (imagePathList != null) {
+                imagePathList.poll();
+            }
+        });
     }
 
     private void openGallery() {
@@ -279,7 +285,7 @@ public class PatrolFrg extends BaseMvpFragment<PatrolPresenter, PatrolModel> imp
         mPhotoRecyclerView.addItemDecoration(new SpacesItemDecoration(0
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
-        mPhotoAdapter = new TakePhotoAdapter(photos);
+        mPhotoAdapter = new TakePhotoAdapter(photos, true);
         mPhotoAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
         mPhotoRecyclerView.setAdapter(mPhotoAdapter);
     }

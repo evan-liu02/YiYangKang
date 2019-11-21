@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.github.arcadefire:nice-spinner:1.4.3'
 
     implementation rootProject.ext.dependencies["rxpermissions2"]
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
 
 

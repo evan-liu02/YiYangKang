@@ -224,6 +224,12 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
                 }
             }
         });
+
+        mAdapter.setCallback(position -> {
+            if (imagePathList != null) {
+                imagePathList.poll();
+            }
+        });
     }
 
     private void openGallery() {
@@ -279,7 +285,7 @@ public class AccidentRegisterFrg extends BaseMvpFragment<AccidentRegPresenter, A
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(0
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
-        mAdapter = new TakePhotoAdapter(photos);
+        mAdapter = new TakePhotoAdapter(photos, true);
         mAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
         mRecyclerView.setAdapter(mAdapter);
     }

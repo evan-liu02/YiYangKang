@@ -97,6 +97,7 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
     private int mPlayStatus = 0;
 
     private String mTipId;
+    private String previousAudioUrl;
 
     @Override
     protected int getLayoutId() {
@@ -201,26 +202,22 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
 
     @Override
     public void clickPlay(ImageView image, String audioUrl) {
-
-        if (mediaPlayer == null)
-            mediaPlayer = new MediaPlayer();
-
-        boolean isPlaying = false;
-        try {
-            isPlaying = mediaPlayer.isPlaying();
-        }catch (IllegalStateException e){
-            mediaPlayer = null;
-            mediaPlayer = new MediaPlayer();
+        if (audioUrl != null) {
+            if (!audioUrl.equals(previousAudioUrl)) {
+                if (mPlayIv != null) {
+                    mPlayIv.setImageResource(R.mipmap.ic_media_play);
+                }
+                mPlayIv = image;
+                prepareMediaPlayer(audioUrl);
+                previousAudioUrl = audioUrl;
+            } else {
+                if (isPlaying()) {
+                    pausePlay();
+                } else {
+                    startPlay();
+                }
+            }
         }
-
-        if (isPlaying){
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-            mediaPlayer = new MediaPlayer();
-        }
-        preareMediaPlayer(audioUrl);
-        startPlay();
     }
 
     @Override
@@ -252,11 +249,13 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
         }
     };
 
-    private void preareMediaPlayer(String audioUrl){
+    private void prepareMediaPlayer(String audioUrl){
+        releaseMediaPlayer();
         try {
-            mediaPlayer.reset();
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(audioUrl);
-            mediaPlayer.prepare();
+            initMediaPlayerListener();
+            mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -266,7 +265,7 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
         if (mediaPlayer != null){
             if (!mediaPlayer.isPlaying()){
                 mediaPlayer.start();
-                mPlayIv.setImageResource(R.mipmap.common_ic_pause);
+                mPlayIv.setImageResource(R.mipmap.ic_media_pause);
                 mPlayStatus = 0;
             }
         }
@@ -282,12 +281,36 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
         }
     }
 
+    private boolean isPlaying() {
+        return mediaPlayer != null && mediaPlayer.isPlaying();
+    }
+
+    private void initMediaPlayerListener(){
+        mediaPlayer.setOnPreparedListener(mp -> {
+            startPlay();
+        });
+
+        mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+            if (mPlayIv != null) {
+                mPlayIv.setImageResource(R.mipmap.ic_media_play);
+            }
+        });
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
+        }
+    }
+
+    private void releaseMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 

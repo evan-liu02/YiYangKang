@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/common_space_5">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_photo"
@@ -12,5 +11,15 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:layout_centerInParent="true"
+        android:layout_margin="@dimen/dp_10"
         app:srcCompat="@mipmap/home_ic_photo_place" />
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/dp_26"
+        android:layout_height="@dimen/dp_26"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/home_ic_close"
+        android:visibility="gone" />
 </com.anju.yyk.common.widget.MyLayoutForGv>

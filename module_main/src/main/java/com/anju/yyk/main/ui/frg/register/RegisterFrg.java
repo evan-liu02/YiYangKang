@@ -200,6 +200,11 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
                 }
             }
         });
+        mRecordAdapter.setCallback(position -> {
+            if (imagePathList != null) {
+                imagePathList.poll();
+            }
+        });
     }
 
     private void openGallery() {
@@ -290,7 +295,7 @@ public class RegisterFrg extends BaseMvpFragment<RegisterPresenter, RegisterMode
         mRecordRecyclerView.addItemDecoration(new SpacesItemDecoration(0
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
-        mRecordAdapter = new TakePhotoAdapter(photos);
+        mRecordAdapter = new TakePhotoAdapter(photos, true);
         mRecordAdapter.setSpanSizeLookup((gridLayoutManager, position) -> photos.get(position).getSpanSize());
         mRecordRecyclerView.setAdapter(mRecordAdapter);
     }
