@@ -103,13 +103,13 @@ public class AccidentDetailAct extends BaseMvpActivity<RecordDetailPresenter, Re
     @Override
     public void initData() {
         if (mInfoEntity != null){
-            if (mInfoEntity.getSex() == 0){
+            /*if (mInfoEntity.getSex() == 0){
                 mSexIv.setImageResource(R.mipmap.home_ic_famale);
             }else {
                 mSexIv.setImageResource(R.mipmap.home_ic_male);
-            }
+            }*/
             mNameTv.setText(mInfoEntity.getName());
-            mAgeTv.setText(mInfoEntity.getAge() + "岁");
+//            mAgeTv.setText(mInfoEntity.getAge() + "岁");
             mNumberBed.setText(mInfoEntity.getBedId() + "床");
             mCareTypeTv.setText(mInfoEntity.getCareType());
         }

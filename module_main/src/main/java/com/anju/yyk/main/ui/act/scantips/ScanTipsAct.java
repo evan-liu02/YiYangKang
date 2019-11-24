@@ -1,11 +1,14 @@
 package com.anju.yyk.main.ui.act.scantips;
 
+import android.app.Activity;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -36,8 +39,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -98,6 +105,10 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
 
     private String mTipId;
     private String previousAudioUrl;
+    private TextView mTimeTv;
+    private SeekBar mProgressBar;
+    private WeakHandler<Activity> mHandler = new WeakHandler<Activity>(this);
+    private boolean isSeeBarChanging;
 
     @Override
     protected int getLayoutId() {
@@ -135,6 +146,7 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
                 , AppUtil.dip2px(mActivity, 1), AppUtil.getColor(mActivity, R.color.common_divder_color)));
 
         mAdapter = new TipsAdapter(mList);
+        mAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -201,13 +213,40 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
     }
 
     @Override
-    public void clickPlay(ImageView image, String audioUrl) {
+    public void clickPlay(int position, String audioUrl) {
         if (audioUrl != null) {
             if (!audioUrl.equals(previousAudioUrl)) {
                 if (mPlayIv != null) {
                     mPlayIv.setImageResource(R.mipmap.ic_media_play);
                 }
-                mPlayIv = image;
+                if (mTimeTv != null) {
+                    mTimeTv.setText("00:00");
+                }
+                if (mProgressBar != null) {
+                    mProgressBar.setProgress(0);
+                }
+                mPlayIv = (ImageView) mAdapter.getViewByPosition(position, R.id.iv_play_audio);
+                mTimeTv = (TextView) mAdapter.getViewByPosition(position, R.id.tv_time);
+                mProgressBar = (SeekBar) mAdapter.getViewByPosition(position, R.id.progress_bar);
+                mProgressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        isSeeBarChanging = true;
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        isSeeBarChanging = false;
+                        if (mediaPlayer != null) {
+                            mediaPlayer.seekTo(seekBar.getProgress());
+                        }
+                    }
+                });
                 prepareMediaPlayer(audioUrl);
                 previousAudioUrl = audioUrl;
             } else {
@@ -282,19 +321,59 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
     }
 
     private boolean isPlaying() {
-        return mediaPlayer != null && mediaPlayer.isPlaying();
+        try {
+            return mediaPlayer != null && mediaPlayer.isPlaying();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void initMediaPlayerListener(){
         mediaPlayer.setOnPreparedListener(mp -> {
             startPlay();
+            int duration = mp.getDuration();
+            if (mProgressBar != null) {
+                mProgressBar.setMax(duration);
+            }
+            mHandler.postDelayed(timeRunnable, 800);
         });
 
         mediaPlayer.setOnCompletionListener(mediaPlayer -> {
             if (mPlayIv != null) {
                 mPlayIv.setImageResource(R.mipmap.ic_media_play);
             }
+            int duration = mediaPlayer.getDuration();
+            if (mTimeTv != null) {
+                mTimeTv.setText(formatTime(duration));
+            }
+            if (mProgressBar != null) {
+                mProgressBar.setProgress(duration);
+            }
         });
+    }
+
+    private Runnable timeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isPlaying() && !isSeeBarChanging) {
+                int position = mediaPlayer.getCurrentPosition();
+                if (mTimeTv != null) {
+                    mTimeTv.setText(formatTime(position));
+                }
+                if (mProgressBar != null) {
+                    mProgressBar.setProgress(position);
+                }
+            }
+            mHandler.postDelayed(timeRunnable, 1000);
+        }
+    };
+
+    private String formatTime(int duration) {
+        Date date = new Date(duration);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
+
+        return simpleDateFormat.format(date);
     }
 
     @Override
@@ -304,6 +383,7 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
             mediaPlayer.stop();
             mediaPlayer.release();
         }
+        mHandler.removeCallbacks(timeRunnable);
     }
 
     private void releaseMediaPlayer() {
@@ -322,6 +402,14 @@ public class ScanTipsAct extends BaseMvpActivity<ScanTipsPresenter, ScanTipsMode
             }else {
                 startPlay();
             }
+        }
+    }
+
+    public static class WeakHandler<T> extends Handler {
+        private final WeakReference<T> host;
+
+        public WeakHandler(T host) {
+            this.host = new WeakReference<T>(host);
         }
     }
 }

@@ -37,7 +37,7 @@ public class InfoDetailPresenter extends IInfoDetailContract.IInfoDetailPresente
                         getView().jisShuInfoSucc(s);
                     }else {
                         getView().jisShuInfoSucc(s);
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
                     }
                 }, throwable -> {
                     getView().hideLoading();
@@ -61,7 +61,7 @@ public class InfoDetailPresenter extends IInfoDetailContract.IInfoDetailPresente
                         getView().healthInfoSucc(s);
                     }else {
                         getView().healthInfoSucc(s);
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
                     }
                 }, throwable -> {
                     getView().hideLoading();
@@ -85,7 +85,7 @@ public class InfoDetailPresenter extends IInfoDetailContract.IInfoDetailPresente
                         getView().diseaseInfoSucc(s);
                     }else {
                         getView().diseaseInfoSucc(s);
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
                     }
                 }, throwable -> {
                     getView().hideLoading();
@@ -110,7 +110,7 @@ public class InfoDetailPresenter extends IInfoDetailContract.IInfoDetailPresente
                         getView().operationInfoSucc(s);
                     }else {
                         getView().operationInfoSucc(s);
-                        getView().showToast(s.getTitle());
+//                        getView().showToast(s.getTitle());
                     }
                 }, throwable -> {
                     getView().hideLoading();

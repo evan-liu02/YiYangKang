@@ -53,9 +53,29 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/ic_audio_download"
                 android:layout_marginEnd="@dimen/dp_10"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="@+id/iv_play_audio"
                 app:layout_constraintBottom_toBottomOf="@id/iv_play_audio"
                 app:layout_constraintRight_toLeftOf="@id/iv_play_audio"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_50"
+                android:text="00:00"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_audio_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <SeekBar
+                android:id="@+id/progress_bar"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/home_seek_bar_thumb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_time"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

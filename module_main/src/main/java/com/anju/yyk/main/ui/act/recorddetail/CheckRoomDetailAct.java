@@ -137,12 +137,12 @@ public class CheckRoomDetailAct extends BaseMvpActivity<RecordDetailPresenter, R
     @Override
     public void initData() {
         if (mInfoEntity != null){
-            if (mInfoEntity.getSex() == 0){
+            /*if (mInfoEntity.getSex() == 0){
                 mSexIv.setImageResource(R.mipmap.home_ic_famale);
             }else {
                 mSexIv.setImageResource(R.mipmap.home_ic_male);
             }
-            mAgeTv.setText(mInfoEntity.getAge() + "岁");
+            mAgeTv.setText(mInfoEntity.getAge() + "岁");*/
             mNameTv.setText(mInfoEntity.getName());
             mNumberBed.setText(mInfoEntity.getBedId() + "床");
             mCareTypeTv.setText(mInfoEntity.getCareType());

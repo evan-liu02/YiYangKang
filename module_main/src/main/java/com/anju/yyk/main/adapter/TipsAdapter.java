@@ -113,9 +113,9 @@ public class TipsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                     helper.getView(R.id.iv_play_audio).setOnClickListener(v -> {
                         if (mCallback != null)
                             if (!audio.getLujing().startsWith("http")) {
-                                mCallback.clickPlay(helper.getView(R.id.iv_play_audio),Constants.AUDIO_HEAD + audio.getLujing());
+                                mCallback.clickPlay(helper.getAdapterPosition(),Constants.AUDIO_HEAD + audio.getLujing());
                             } else {
-                                mCallback.clickPlay(helper.getView(R.id.iv_play_audio), audio.getLujing());
+                                mCallback.clickPlay(helper.getAdapterPosition(), audio.getLujing());
                             }
                     });
 
@@ -137,7 +137,7 @@ public class TipsAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
     }
 
     public interface TipsCallBack{
-        void clickPlay(ImageView image, String audioUrl);
+        void clickPlay(int position, String audioUrl);
         void downLoadAudio(String audioUrl);
         void clickRead(int position, String zhuyi_id);
     }

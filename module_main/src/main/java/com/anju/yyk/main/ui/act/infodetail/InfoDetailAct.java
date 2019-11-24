@@ -158,6 +158,8 @@ public class InfoDetailAct extends BaseMvpActivity<InfoDetailPresenter,InfoDetai
         if (info.getStatus() == 0){
             mAllergyTv.setText(info.getGuominshi());
             mPulseTv.setText("脉率：" + info.getMailv() + "        " + "体温：" + info.getTiwen());
+        } else {
+            mAllergyTv.setText("无");
         }
         mPresenter.getDiseaseInfo(mPersonInfo.getId());
     }
@@ -173,6 +175,8 @@ public class InfoDetailAct extends BaseMvpActivity<InfoDetailPresenter,InfoDetai
                 }
                 mDiseaseTv.setText(sb.toString());
             }
+        } else {
+            mDiseaseTv.setText("无");
         }
 
         mPresenter.getOperationInfo(mPersonInfo.getId());
@@ -187,8 +191,10 @@ public class InfoDetailAct extends BaseMvpActivity<InfoDetailPresenter,InfoDetai
                 for (OperationResponse.ListBean bean : listBeans){
                     sb.append(bean.getName() + "    ");
                 }
-                mDiseaseTv.setText(sb.toString());
+                mOperationTv.setText(sb.toString());
             }
+        } else {
+            mOperationTv.setText("无");
         }
     }
 }

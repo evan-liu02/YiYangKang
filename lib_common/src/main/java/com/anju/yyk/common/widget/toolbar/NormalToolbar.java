@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -38,6 +39,8 @@ public class NormalToolbar extends Toolbar {
     ImageView commonIvLeft;
     @BindView(R2.id.common_iv_right)
     ImageView commonIvRight;
+    @BindView(R2.id.left_layout)
+    LinearLayout commonLeftLayout;
 
     private Unbinder mUnBinder;
     private String titleText;
@@ -120,9 +123,9 @@ public class NormalToolbar extends Toolbar {
 
     public void ivIsShow(boolean leftIsShow, boolean rightIsShow){
         if (leftIsShow){
-            commonIvLeft.setVisibility(VISIBLE);
+            commonLeftLayout.setVisibility(VISIBLE);
         }else {
-            commonIvLeft.setVisibility(GONE);
+            commonLeftLayout.setVisibility(GONE);
         }
 
         if (rightIsShow){
@@ -140,14 +143,14 @@ public class NormalToolbar extends Toolbar {
         this.mToolbarListener = listener;
     }
 
-    @OnClick({R2.id.common_tv_left, R2.id.common_tv_right, R2.id.common_iv_left, R2.id.common_iv_right})
+    @OnClick({R2.id.common_tv_left, R2.id.common_tv_right, R2.id.common_iv_left, R2.id.common_iv_right, R2.id.left_layout})
     public void onViewCliecked(View view){
         if (mToolbarListener != null){
             if (view.getId() == R.id.common_tv_left){
                 mToolbarListener.leftTvListener();
             }else if (view.getId() == R.id.common_tv_right){
                 mToolbarListener.rightTvListener();
-            }else if (view.getId() == R.id.common_iv_left){
+            }else if (view.getId() == R.id.common_iv_left || view.getId() == R.id.left_layout){
                 mToolbarListener.leftIvListener();
             }else if (view.getId() == R.id.common_iv_right){
                 mToolbarListener.rightIvListener();

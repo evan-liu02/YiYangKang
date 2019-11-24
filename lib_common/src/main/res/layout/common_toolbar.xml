@@ -29,15 +29,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="测试"/>
 
-        <ImageView
-            android:id="@+id/common_iv_left"
-            android:layout_width="@dimen/common_img_length_20"
-            android:layout_height="@dimen/common_img_length_20"
-            android:layout_marginStart="@dimen/common_space_10"
-            android:src="@mipmap/common_back_arrow"
+        <LinearLayout
+            android:id="@+id/left_layout"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/common_iv_left"
+                android:layout_width="@dimen/common_img_length_20"
+                android:layout_height="@dimen/common_img_length_20"
+                android:src="@mipmap/common_back_arrow" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/common_tv_topic"

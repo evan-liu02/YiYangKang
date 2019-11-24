@@ -57,26 +57,88 @@
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="有点感冒，多喝热水"/>
 
-        <TextView
-            android:id="@+id/tv_workername"
-            style="@style/common_text_content_theme"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_content"
-            app:layout_constraintTop_toBottomOf="@+id/tv_content"
-            tools:text="护理员：孙大圣" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_content">
+            <TextView
+                android:id="@+id/tv_workername"
+                style="@style/common_text_content_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="护理员：孙大圣" />
 
-        <TextView
-            android:id="@+id/tv_time"
-            style="@style/common_text_content_theme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_8"
-            app:layout_constraintTop_toTopOf="@+id/tv_workername"
-            app:layout_constraintBottom_toBottomOf="@id/tv_workername"
-            app:layout_constraintLeft_toRightOf="@+id/tv_workername"
-            tools:text="16:09" />
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/common_text_content_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                app:layout_constraintTop_toTopOf="@+id/tv_workername"
+                app:layout_constraintBottom_toBottomOf="@id/tv_workername"
+                app:layout_constraintLeft_toRightOf="@+id/tv_workername"
+                tools:text="16:09" />
+
+            <ImageView
+                android:id="@+id/iv_read_status"
+                android:layout_width="@dimen/dp_74"
+                android:layout_height="@dimen/dp_34"
+                android:layout_marginEnd="@dimen/dp_13"
+                android:src="@mipmap/home_ic_unread"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_unread"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_6"
+                android:text="未读"
+                android:visibility="gone"
+                android:textColor="@color/common_white"
+                android:textSize="@dimen/sp_13"
+                app:layout_constraintBottom_toBottomOf="@id/iv_read_status"
+                app:layout_constraintRight_toRightOf="@id/iv_read_status"
+                app:layout_constraintTop_toTopOf="@id/iv_read_status" />
+
+            <TextView
+                android:id="@+id/tv_read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:text="已读"
+                android:visibility="gone"
+                android:textColor="@color/common_white"
+                android:textSize="@dimen/sp_13"
+                app:layout_constraintBottom_toBottomOf="@id/iv_read_status"
+                app:layout_constraintLeft_toLeftOf="@id/iv_read_status"
+                app:layout_constraintTop_toTopOf="@id/iv_read_status" />
+
+            <TextView
+                android:id="@+id/tv_play"
+                android:background="@drawable/common_corner_theme_btn_bg"
+                style="@style/common_text_tag_white"
+                android:textColor="@color/common_white"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_22"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_11"
+                android:paddingEnd="@dimen/dp_11"
+                android:textSize="@dimen/sp_13"
+                android:layout_marginEnd="@dimen/common_space_10"
+                android:text="护理录音"
+                app:layout_constraintRight_toLeftOf="@id/iv_read_status"
+                app:layout_constraintTop_toTopOf="@id/iv_read_status"
+                app:layout_constraintBottom_toBottomOf="@id/iv_read_status"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_111"
@@ -84,8 +146,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_space_5"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_workername"
-            app:layout_constraintTop_toBottomOf="@id/tv_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout"
             android:text="已读：" />
 
         <TextView
@@ -93,65 +155,10 @@
             style="@style/common_text_content_default"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/tv_111"
+            app:layout_constraintLeft_toRightOf="@id/tv_111"
             app:layout_constraintTop_toTopOf="@id/tv_111"
-            app:layout_constraintRight_toLeftOf="@+id/tv_play"
-            android:maxLines="2"
-            android:ellipsize="end"
+            app:layout_constraintRight_toRightOf="parent"
             tools:text="唐僧" />
-
-        <ImageView
-            android:id="@+id/iv_read_status"
-            android:layout_width="@dimen/dp_74"
-            android:layout_height="@dimen/dp_34"
-            android:layout_marginEnd="@dimen/dp_13"
-            android:src="@mipmap/home_ic_unread"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_unread"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_6"
-            android:text="未读"
-            android:visibility="gone"
-            android:textColor="@color/common_white"
-            android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toBottomOf="@id/iv_read_status"
-            app:layout_constraintRight_toRightOf="@id/iv_read_status"
-            app:layout_constraintTop_toTopOf="@id/iv_read_status" />
-
-        <TextView
-            android:id="@+id/tv_read"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_6"
-            android:text="已读"
-            android:visibility="gone"
-            android:textColor="@color/common_white"
-            android:textSize="@dimen/sp_13"
-            app:layout_constraintBottom_toBottomOf="@id/iv_read_status"
-            app:layout_constraintLeft_toLeftOf="@id/iv_read_status"
-            app:layout_constraintTop_toTopOf="@id/iv_read_status" />
-
-        <TextView
-            android:id="@+id/tv_play"
-            android:background="@drawable/common_corner_theme_btn_bg"
-            style="@style/common_text_tag_white"
-            android:textColor="@color/common_white"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_22"
-            android:gravity="center"
-            android:paddingStart="@dimen/dp_11"
-            android:paddingEnd="@dimen/dp_11"
-            android:textSize="@dimen/sp_13"
-            android:layout_marginEnd="@dimen/common_space_10"
-            android:text="护理录音"
-            app:layout_constraintRight_toLeftOf="@id/iv_read_status"
-            app:layout_constraintTop_toTopOf="@id/iv_read_status"
-            app:layout_constraintBottom_toBottomOf="@id/iv_read_status"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

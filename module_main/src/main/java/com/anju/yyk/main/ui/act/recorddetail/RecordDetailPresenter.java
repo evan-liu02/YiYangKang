@@ -17,7 +17,7 @@ public class RecordDetailPresenter extends IRecordDetailContract.RecordDetailPre
         if (getView() == null){
             return;
         }
-        getView().showLoading(true);
+//        getView().showLoading(true);
 
         Observable<CheckRoomDetailResponse> observable = mModel.requestCheckRoomDetail(chafang_id);
         Disposable disposable = observable.subscribeOn(Schedulers.io())
@@ -41,7 +41,7 @@ public class RecordDetailPresenter extends IRecordDetailContract.RecordDetailPre
         if (getView() == null){
             return;
         }
-        getView().showLoading(true);
+//        getView().showLoading(true);
 
         Observable<CareDetailResponse> observable = mModel.requestCareDetail(laoren_id, time);
         Disposable disposable = observable.subscribeOn(Schedulers.io())
@@ -65,7 +65,7 @@ public class RecordDetailPresenter extends IRecordDetailContract.RecordDetailPre
         if (getView() == null){
             return;
         }
-        getView().showLoading(true);
+//        getView().showLoading(true);
 
         Observable<AccidentDetailResponse> observable = mModel.requestAccidentDetail(shigu_id);
         Disposable disposable = observable.subscribeOn(Schedulers.io())

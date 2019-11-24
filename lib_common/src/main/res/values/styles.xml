@@ -40,7 +40,7 @@
     </style>
 
     <style name="common_text_tag_default">
-        <item name="android:textSize">@dimen/common_text_tag</item>
+        <item name="android:textSize">@dimen/common_text_content</item>
         <item name="android:textColor">@color/common_text_default</item>
     </style>
 
@@ -106,7 +106,7 @@
     </style>
 
     <style name="common_text_tag_theme">
-        <item name="android:textSize">@dimen/common_text_tag</item>
+        <item name="android:textSize">@dimen/common_text_content</item>
         <item name="android:textColor">@color/common_theme</item>
     </style>
 
