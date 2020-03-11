@@ -37,7 +37,7 @@
             android:background="@color/common_white"
             android:gravity="top|left"
             android:hint="请输入巡查情况"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:padding="@dimen/dp_10" />
 
         <TextView

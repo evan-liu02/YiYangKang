@@ -28,7 +28,7 @@
             android:padding="@dimen/dp_10"
             android:hint="@string/home_add_accident_hint"
             android:background="@color/common_white"
-            android:inputType="text" />
+            android:inputType="textMultiLine" />
 
         <TextView
             android:id="@+id/tv_record_time"
