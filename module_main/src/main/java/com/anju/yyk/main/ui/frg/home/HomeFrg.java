@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,15 +55,15 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
 /**
- * 
+ *
  * @author LeoWang
- * 
+ *
  * @Package com.anju.yyk.main.ui.frg.home
- * 
+ *
  * @Description 首页
- * 
+ *
  * @Date 2019/9/5 15:21
- * 
+ *
  * @modify:
  */
 public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
@@ -191,7 +192,7 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         mPtrFl.refreshComplete();
         PersonInfoHelper.personList = list;
 
-        BedTitleEntity entity2 = new BedTitleEntity();
+        /*BedTitleEntity entity2 = new BedTitleEntity();
         entity2.setTitle("1-15床");
 
         BedTitleEntity entity3 = new BedTitleEntity();
@@ -201,10 +202,11 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
         entity4.setTitle("31-45床");
 
         BedTitleEntity entity5 = new BedTitleEntity();
-        entity5.setTitle("46-55床");
+        entity5.setTitle("46-55床");*/
 
+        SparseArray<BedTitleEntity> array = new SparseArray<BedTitleEntity>();
         for (PersonListResponse.ListBean bean : list){
-            if (1 <= bean.getChuangwei() && 15 >= bean.getChuangwei()){
+            /*if (1 <= bean.getChuangwei() && 15 >= bean.getChuangwei()){
                 entity2.addSubItem(bean);
             }else if (16 <= bean.getChuangwei() && 30 >= bean.getChuangwei()){
                 entity3.addSubItem(bean);
@@ -212,13 +214,31 @@ public class HomeFrg extends BaseMvpFragment<HomePresenter, HomeModel>
                 entity4.addSubItem(bean);
             }else if (46 <= bean.getChuangwei() && 55 >= bean.getChuangwei()){
                 entity5.addSubItem(bean);
+            }*/
+            int bed = bean.getChuangwei();
+            int index = (bed - 1) / 15; // 床位的区间索引
+            int start = index * 15;
+            BedTitleEntity bedTitleEntity = array.get(index);
+            if (bedTitleEntity == null) {
+                bedTitleEntity = new BedTitleEntity();
+                bedTitleEntity.setTitle((start + 1) + "-" + (start + 15) + "床");
+                bedTitleEntity.addSubItem(bean);
+                array.put(index, bedTitleEntity);
+            } else {
+                bedTitleEntity.addSubItem(bean);
             }
         }
 
-        mDedInfoList.add(entity2);
+        /*mDedInfoList.add(entity2);
         mDedInfoList.add(entity3);
         mDedInfoList.add(entity4);
-        mDedInfoList.add(entity5);
+        mDedInfoList.add(entity5);*/
+
+        int size = array.size();
+        for (int i = 0; i < size; i++) {
+            int key = array.keyAt(i);
+            mDedInfoList.add(array.get(key));
+        }
 
         mAdapter.notifyDataSetChanged();
         mPtrFl.autoRefresh();
